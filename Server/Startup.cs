@@ -11,7 +11,7 @@ using Server.Models;
 using Microsoft.EntityFrameworkCore.SqlServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-
+using Server.Services;
 namespace Server
 {
     public class Startup
@@ -26,6 +26,7 @@ namespace Server
             services.AddControllers();
             var conn = configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<DatabaseContext>(option => option.UseLazyLoadingProxies().UseSqlServer(conn));
+            services.AddScoped<IAccountService, AccountServiceImpl>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
