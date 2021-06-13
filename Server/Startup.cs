@@ -7,16 +7,25 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Server.Models;
+using Microsoft.EntityFrameworkCore.SqlServer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace Server
 {
     public class Startup
     {
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+        private IConfiguration configuration;
+        public Startup(IConfiguration _configuration)
+        {
+            configuration = _configuration;
+        }
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            var conn = configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<DatabaseContext>(option => option.UseLazyLoadingProxies().UseSqlServer(conn));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -31,7 +40,7 @@ namespace Server
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute();
+                endpoints.MapControllers();
 ;            });
         }
     }

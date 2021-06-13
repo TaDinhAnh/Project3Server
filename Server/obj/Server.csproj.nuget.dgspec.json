@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\lop c1908i1\\API\\Server\\Server\\Server.csproj": {}
+    "C:\\Users\\Admin\\Desktop\\Project3Server\\Server\\Server.csproj": {}
   },
   "projects": {
-    "D:\\lop c1908i1\\API\\Server\\Server\\Server.csproj": {
+    "C:\\Users\\Admin\\Desktop\\Project3Server\\Server\\Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\lop c1908i1\\API\\Server\\Server\\Server.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\Desktop\\Project3Server\\Server\\Server.csproj",
         "projectName": "Server",
-        "projectPath": "D:\\lop c1908i1\\API\\Server\\Server\\Server.csproj",
+        "projectPath": "C:\\Users\\Admin\\Desktop\\Project3Server\\Server\\Server.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "D:\\lop c1908i1\\API\\Server\\Server\\obj\\",
+        "outputPath": "C:\\Users\\Admin\\Desktop\\Project3Server\\Server\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -39,6 +39,30 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore.Proxies": {
+              "target": "Package",
+              "version": "[5.0.7, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[5.0.7, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer.Design": {
+              "target": "Package",
+              "version": "[1.1.6, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[5.0.7, )"
+            },
+            "Microsoft.Extensions.Configuration.Json": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
