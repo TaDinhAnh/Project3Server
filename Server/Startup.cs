@@ -27,6 +27,15 @@ namespace Server
             var conn = configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<DatabaseContext>(option => option.UseLazyLoadingProxies().UseSqlServer(conn));
             services.AddScoped<IAccountService, AccountServiceImpl>();
+            services.AddScoped<IAllPersonService, AllPersonServiceImpl>();
+            services.AddScoped<ITopicService, TopicServiceImpl>();
+            services.AddScoped<ISurveyService, SurveyServiceImpl>();
+            services.AddScoped<IAnswerService, AnswerServiceImpl>();
+            services.AddScoped<IImgService, ImgServiceImpl>();
+            services.AddScoped<IPerformerService, PerformerServiceImpl>();
+            services.AddScoped<ISeminarService, SeminarServiceImpl>();
+            services.AddScoped<IQuestionService, QuestionServiceImpl>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

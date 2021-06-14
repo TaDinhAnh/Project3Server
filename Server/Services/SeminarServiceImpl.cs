@@ -1,37 +1,22 @@
-﻿using Server.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using Server.Models;
 namespace Server.Services
 {
-    public class AccountServiceImpl : IAccountService
+    public class SeminarServiceImpl : ISeminarService
     {
         private readonly DatabaseContext db;
-        public AccountServiceImpl(DatabaseContext databaseContext)
+        public SeminarServiceImpl(DatabaseContext databaseContext)
         {
             db = databaseContext;
         }
-        public string Create(Account acc)
+        public string Create(Seminar seminar)
         {
             try
             {
-                db.Accounts.Add(acc);
-                db.SaveChanges();
-                return "Seccuss";
-            }
-            catch(Exception e)
-            {
-                return e.Message;
-            }
-        }
-
-        public string Del(int idAcc)
-        {
-            try
-            {
-                db.Accounts.Remove(db.Accounts.Find(idAcc));
+                db.Seminars.Add(seminar);
                 db.SaveChanges();
                 return "Seccuss";
             }
@@ -41,44 +26,58 @@ namespace Server.Services
             }
         }
 
-        public Account Find(int idAcc)
+        public string Del(int idSeminar)
         {
             try
             {
-                return db.Accounts.Find(idAcc);
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        public List<Account> FindAll()
-        {
-            try
-            {
-                return db.Accounts.ToList();
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        public string Update(Account acc)
-        {
-            try
-            {
-               
-                db.Entry(acc).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                db.Seminars.Remove(db.Seminars.Find(idSeminar));
                 db.SaveChanges();
-                return "success";
+                return "Seccuss";
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return e.Message;
             }
-           
+        }
+
+        public Seminar Find(int idSeminar)
+        {
+            try
+            {
+                return db.Seminars.Find(idSeminar);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public List<Seminar> FindAll()
+        {
+            try
+            {
+                return db.Seminars.ToList();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public string Update(Seminar seminar)
+        {
+            try
+            {
+
+                db.Entry(seminar).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                db.SaveChanges();
+                return "success";
+            }
+            catch (Exception e)
+            {
+                return e.Message;
+            }
+
         }
     }
 }
