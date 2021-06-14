@@ -1,37 +1,22 @@
-﻿using Server.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using Server.Models;
 namespace Server.Services
 {
-    public class AccountServiceImpl : IAccountService
+    public class QuestionServiceImpl : IQuestionService
     {
         private readonly DatabaseContext db;
-        public AccountServiceImpl(DatabaseContext databaseContext)
+        public QuestionServiceImpl(DatabaseContext databaseContext)
         {
             db = databaseContext;
         }
-        public string Create(Account acc)
+        public string Create(Question question)
         {
             try
             {
-                db.Accounts.Add(acc);
-                db.SaveChanges();
-                return "Seccuss";
-            }
-            catch(Exception e)
-            {
-                return e.Message;
-            }
-        }
-
-        public string Del(int idAcc)
-        {
-            try
-            {
-                db.Accounts.Remove(db.Accounts.Find(idAcc));
+                db.Questions.Add(question);
                 db.SaveChanges();
                 return "Seccuss";
             }
@@ -41,44 +26,58 @@ namespace Server.Services
             }
         }
 
-        public Account Find(int idAcc)
+        public string Del(int idQuestion)
         {
             try
             {
-                return db.Accounts.Find(idAcc);
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        public List<Account> FindAll()
-        {
-            try
-            {
-                return db.Accounts.ToList();
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        public string Update(Account acc)
-        {
-            try
-            {
-               
-                db.Entry(acc).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                db.Questions.Remove(db.Questions.Find(idQuestion));
                 db.SaveChanges();
-                return "success";
+                return "Seccuss";
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return e.Message;
             }
-           
+        }
+
+        public Question Find(int idQuestion)
+        {
+            try
+            {
+                return db.Questions.Find(idQuestion);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public List<Question> FindAll()
+        {
+            try
+            {
+                return db.Questions.ToList();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public string Update(Question question)
+        {
+            try
+            {
+
+                db.Entry(question).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                db.SaveChanges();
+                return "success";
+            }
+            catch (Exception e)
+            {
+                return e.Message;
+            }
+
         }
     }
 }

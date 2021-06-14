@@ -1,37 +1,22 @@
-﻿using Server.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using Server.Models;
 namespace Server.Services
 {
-    public class AccountServiceImpl : IAccountService
+    public class AllPersonServiceImpl : IAllPersonService
     {
         private readonly DatabaseContext db;
-        public AccountServiceImpl(DatabaseContext databaseContext)
+        public AllPersonServiceImpl(DatabaseContext databaseContext)
         {
             db = databaseContext;
         }
-        public string Create(Account acc)
+        public string Create(AllPerson allPerson)
         {
             try
             {
-                db.Accounts.Add(acc);
-                db.SaveChanges();
-                return "Seccuss";
-            }
-            catch(Exception e)
-            {
-                return e.Message;
-            }
-        }
-
-        public string Del(int idAcc)
-        {
-            try
-            {
-                db.Accounts.Remove(db.Accounts.Find(idAcc));
+                db.AllPeople.Add(allPerson);
                 db.SaveChanges();
                 return "Seccuss";
             }
@@ -41,44 +26,58 @@ namespace Server.Services
             }
         }
 
-        public Account Find(int idAcc)
+        public string Del(int idAllPerson)
         {
             try
             {
-                return db.Accounts.Find(idAcc);
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        public List<Account> FindAll()
-        {
-            try
-            {
-                return db.Accounts.ToList();
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        public string Update(Account acc)
-        {
-            try
-            {
-               
-                db.Entry(acc).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                db.AllPeople.Remove(db.AllPeople.Find(idAllPerson));
                 db.SaveChanges();
-                return "success";
+                return "Seccuss";
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return e.Message;
             }
-           
+        }
+
+        public AllPerson Find(int idAllperson)
+        {
+            try
+            {
+                return db.AllPeople.Find(idAllperson);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+
+        public List<AllPerson> FindAll()
+        {
+            try
+            {
+                return db.AllPeople.ToList();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public string Update(AllPerson allPerson)
+        {
+            try
+            {
+                db.Entry(allPerson).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                db.SaveChanges();
+                return "success";
+            }
+            catch (Exception e)
+            {
+                return e.Message;
+            }
+
         }
     }
 }

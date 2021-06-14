@@ -1,37 +1,22 @@
-﻿using Server.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using Server.Models;
 namespace Server.Services
 {
-    public class AccountServiceImpl : IAccountService
+    public class PerformerServiceImpl : IPerformerService
     {
         private readonly DatabaseContext db;
-        public AccountServiceImpl(DatabaseContext databaseContext)
+        public PerformerServiceImpl(DatabaseContext databaseContext)
         {
             db = databaseContext;
         }
-        public string Create(Account acc)
+        public string Create(Performer performer)
         {
             try
             {
-                db.Accounts.Add(acc);
-                db.SaveChanges();
-                return "Seccuss";
-            }
-            catch(Exception e)
-            {
-                return e.Message;
-            }
-        }
-
-        public string Del(int idAcc)
-        {
-            try
-            {
-                db.Accounts.Remove(db.Accounts.Find(idAcc));
+                db.Performers.Add(performer);
                 db.SaveChanges();
                 return "Seccuss";
             }
@@ -41,44 +26,58 @@ namespace Server.Services
             }
         }
 
-        public Account Find(int idAcc)
+        public string Del(int idPerformer)
         {
             try
             {
-                return db.Accounts.Find(idAcc);
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        public List<Account> FindAll()
-        {
-            try
-            {
-                return db.Accounts.ToList();
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        public string Update(Account acc)
-        {
-            try
-            {
-               
-                db.Entry(acc).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                db.Performers.Remove(db.Performers.Find(idPerformer));
                 db.SaveChanges();
-                return "success";
+                return "Seccuss";
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return e.Message;
             }
-           
+        }
+
+        public Performer Find(int idPerformer)
+        {
+            try
+            {
+                return db.Performers.Find(idPerformer);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public List<Performer> FindAll()
+        {
+            try
+            {
+                return db.Performers.ToList();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public string Update(Performer performer)
+        {
+            try
+            {
+
+                db.Entry(performer).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                db.SaveChanges();
+                return "success";
+            }
+            catch (Exception e)
+            {
+                return e.Message;
+            }
+
         }
     }
 }
