@@ -7,8 +7,8 @@ namespace Server.Models
 {
     public partial class RegisterSeminar
     {
-        public int? IdAcc { get; set; }
-        public int? IdSeminar { get; set; }
+        public int IdAcc { get; set; }
+        public int IdSeminar { get; set; }
         public bool? Status { get; set; }
 
         public virtual Account IdAccNavigation { get; set; }

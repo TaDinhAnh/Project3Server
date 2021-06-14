@@ -9,7 +9,7 @@ namespace Server.Models
     {
         public Question()
         {
-            AnswerQuestions = new HashSet<AnswerQuestion>();
+            Answers = new HashSet<Answer>();
             QuestionSurveys = new HashSet<QuestionSurvey>();
         }
 
@@ -18,7 +18,7 @@ namespace Server.Models
         public DateTime? Updated { get; set; }
         public bool? Status { get; set; }
 
-        public virtual ICollection<AnswerQuestion> AnswerQuestions { get; set; }
+        public virtual ICollection<Answer> Answers { get; set; }
         public virtual ICollection<QuestionSurvey> QuestionSurveys { get; set; }
     }
 }

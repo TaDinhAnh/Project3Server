@@ -49,25 +49,21 @@ GO
 
 CREATE TABLE Answer(
 Id INT IDENTITY PRIMARY KEY,
+IdQuestion INT CONSTRAINT FK_Answer_Question FOREIGN KEY(IdQuestion) REFERENCES Question(Id),
 Answer NVARCHAR(250),
 Updated DATE,
 [Status] BIT
 )
 GO
 
-CREATE TABLE AnswerQuestion(
-IdQuestion INT CONSTRAINT FK_AQ_Question FOREIGN KEY(IdQuestion) REFERENCES Question(Id),
-IdAnswer INT CONSTRAINT FK_QS_Answer FOREIGN KEY(IdAnswer) REFERENCES Answer(Id),
-[Status] BIT
-PRIMARY KEY(IdQuestion, IdAnswer)
-)
-GO
+
 
 CREATE TABLE Score(
 IdAcc INT CONSTRAINT FK_Score_Account FOREIGN KEY(IdAcc) REFERENCES Account(Id),
 IdSurvey INT CONSTRAINT FK_Score_Survey FOREIGN KEY(IdSurvey) REFERENCES Survey(Id),
 Score INT,
-[Status] BIT
+[Status] BIT,
+PRIMARY KEY(IdAcc, IdSurvey)
 )
 GO
 
@@ -80,12 +76,14 @@ Gender BIT,
 Position NVARCHAR(50),
 Class NVARCHAR(50)
 )
+GO
 
 CREATE TABLE Topic(
 Id INT IDENTITY PRIMARY KEY,
 Topic NVARCHAR(50),
 [Status] BIT
 )
+GO
 CREATE TABLE Seminar(
 Id INT IDENTITY PRIMARY KEY,
 IdTopic INT CONSTRAINT FK_Seminar_Topic FOREIGN KEY(IdTopic) REFERENCES Topic(Id),
@@ -96,6 +94,7 @@ TimeStart TIME,
 TimeEnd TIME,
 [Day] DATE,
 Place NVARCHAR,
+Maximum INT,
 NumberOfParticipants INT,
 [Descriptoin] NVARCHAR(500),
 [Status] BIT
@@ -123,10 +122,13 @@ CREATE TABLE RegisterSeminar(
 IdAcc INT CONSTRAINT FK_RegisterSeminar_Account FOREIGN KEY(IdAcc) REFERENCES Account(Id),
 IdSeminar INT CONSTRAINT FK_RegisterSeminar_Seminar FOREIGN KEY(IdSeminar) REFERENCES Seminar(Id),
 [Status] BIT
+PRIMARY KEY(IdAcc, IdSeminar)
 )
+GO
 CREATE TABLE PerformenSeminar(
 IdPerforment INT CONSTRAINT FK_PerformenSeminar_Performer FOREIGN KEY(IdPerforment) REFERENCES Performer(Id),
 IdSeminar INT CONSTRAINT FK_PerformenSeminar_Seminar FOREIGN KEY(IdSeminar) REFERENCES Seminar(Id),
-[Status] BIT
+[Status] BIT,
+PRIMARY KEY (IdPerforment, IdSeminar)
 )
 GO

@@ -7,8 +7,8 @@ namespace Server.Models
 {
     public partial class Score
     {
-        public int? IdAcc { get; set; }
-        public int? IdSurvey { get; set; }
+        public int IdAcc { get; set; }
+        public int IdSurvey { get; set; }
         public int? Score1 { get; set; }
         public bool? Status { get; set; }
 

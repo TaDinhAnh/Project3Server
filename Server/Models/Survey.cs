@@ -10,6 +10,7 @@ namespace Server.Models
         public Survey()
         {
             QuestionSurveys = new HashSet<QuestionSurvey>();
+            Scores = new HashSet<Score>();
         }
 
         public int Id { get; set; }
@@ -19,5 +20,6 @@ namespace Server.Models
         public bool? Status { get; set; }
 
         public virtual ICollection<QuestionSurvey> QuestionSurveys { get; set; }
+        public virtual ICollection<Score> Scores { get; set; }
     }
 }

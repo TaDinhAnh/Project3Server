@@ -20,7 +20,6 @@ namespace Server.Models
         public virtual DbSet<Account> Accounts { get; set; }
         public virtual DbSet<AllPerson> AllPeople { get; set; }
         public virtual DbSet<Answer> Answers { get; set; }
-        public virtual DbSet<AnswerQuestion> AnswerQuestions { get; set; }
         public virtual DbSet<Img> Imgs { get; set; }
         public virtual DbSet<PerformenSeminar> PerformenSeminars { get; set; }
         public virtual DbSet<Performer> Performers { get; set; }
@@ -32,7 +31,14 @@ namespace Server.Models
         public virtual DbSet<Survey> Surveys { get; set; }
         public virtual DbSet<Topic> Topics { get; set; }
 
-      
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Server=.;Database=EnvironmentalSurvey;user id=sa;password=123456");
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -56,7 +62,7 @@ namespace Server.Models
             modelBuilder.Entity<AllPerson>(entity =>
             {
                 entity.HasKey(e => e.IdPerson)
-                    .HasName("PK__AllPeopl__A5D4E15B0FA66F5E");
+                    .HasName("PK__AllPeopl__A5D4E15BE594DE35");
 
                 entity.Property(e => e.IdPerson).HasMaxLength(250);
 
@@ -84,26 +90,11 @@ namespace Server.Models
                     .HasColumnName("Answer");
 
                 entity.Property(e => e.Updated).HasColumnType("date");
-            });
-
-            modelBuilder.Entity<AnswerQuestion>(entity =>
-            {
-                entity.HasKey(e => new { e.IdQuestion, e.IdAnswer })
-                    .HasName("PK__AnswerQu__26B60F1D231907EA");
-
-                entity.ToTable("AnswerQuestion");
-
-                entity.HasOne(d => d.IdAnswerNavigation)
-                    .WithMany(p => p.AnswerQuestions)
-                    .HasForeignKey(d => d.IdAnswer)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_QS_Answer");
 
                 entity.HasOne(d => d.IdQuestionNavigation)
-                    .WithMany(p => p.AnswerQuestions)
+                    .WithMany(p => p.Answers)
                     .HasForeignKey(d => d.IdQuestion)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_AQ_Question");
+                    .HasConstraintName("FK_Answer_Question");
             });
 
             modelBuilder.Entity<Img>(entity =>
@@ -120,18 +111,21 @@ namespace Server.Models
 
             modelBuilder.Entity<PerformenSeminar>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => new { e.IdPerforment, e.IdSeminar })
+                    .HasName("PK__Performe__80EC2C6172DE90F1");
 
                 entity.ToTable("PerformenSeminar");
 
                 entity.HasOne(d => d.IdPerformentNavigation)
-                    .WithMany()
+                    .WithMany(p => p.PerformenSeminars)
                     .HasForeignKey(d => d.IdPerforment)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_PerformenSeminar_Performer");
 
                 entity.HasOne(d => d.IdSeminarNavigation)
-                    .WithMany()
+                    .WithMany(p => p.PerformenSeminars)
                     .HasForeignKey(d => d.IdSeminar)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_PerformenSeminar_Seminar");
             });
 
@@ -162,7 +156,7 @@ namespace Server.Models
             modelBuilder.Entity<QuestionSurvey>(entity =>
             {
                 entity.HasKey(e => new { e.IdQuestion, e.IdSurvey })
-                    .HasName("PK__Question__E1194D417FEDCB14");
+                    .HasName("PK__Question__E1194D416EE9900A");
 
                 entity.ToTable("QuestionSurvey");
 
@@ -183,37 +177,43 @@ namespace Server.Models
 
             modelBuilder.Entity<RegisterSeminar>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => new { e.IdAcc, e.IdSeminar })
+                    .HasName("PK__Register__2CCF44CAA5CEFBB0");
 
                 entity.ToTable("RegisterSeminar");
 
                 entity.HasOne(d => d.IdAccNavigation)
-                    .WithMany()
+                    .WithMany(p => p.RegisterSeminars)
                     .HasForeignKey(d => d.IdAcc)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_RegisterSeminar_Account");
 
                 entity.HasOne(d => d.IdSeminarNavigation)
-                    .WithMany()
+                    .WithMany(p => p.RegisterSeminars)
                     .HasForeignKey(d => d.IdSeminar)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_RegisterSeminar_Seminar");
             });
 
             modelBuilder.Entity<Score>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => new { e.IdAcc, e.IdSurvey })
+                    .HasName("PK__Score__1409340BD18ED55A");
 
                 entity.ToTable("Score");
 
                 entity.Property(e => e.Score1).HasColumnName("Score");
 
                 entity.HasOne(d => d.IdAccNavigation)
-                    .WithMany()
+                    .WithMany(p => p.Scores)
                     .HasForeignKey(d => d.IdAcc)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Score_Account");
 
                 entity.HasOne(d => d.IdSurveyNavigation)
-                    .WithMany()
+                    .WithMany(p => p.Scores)
                     .HasForeignKey(d => d.IdSurvey)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Score_Survey");
             });
 
