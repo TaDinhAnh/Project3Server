@@ -23,7 +23,7 @@ namespace Server
         }
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             var conn = configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<DatabaseContext>(option => option.UseLazyLoadingProxies().UseSqlServer(conn));
             services.AddScoped<IAccountService, AccountServiceImpl>();
@@ -51,7 +51,8 @@ namespace Server
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-;            });
+                ;
+            });
         }
     }
 }
