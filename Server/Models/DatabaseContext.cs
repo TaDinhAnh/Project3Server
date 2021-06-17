@@ -31,7 +31,7 @@ namespace Server.Models
         public virtual DbSet<Survey> Surveys { get; set; }
         public virtual DbSet<Topic> Topics { get; set; }
 
-     
+      
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -45,7 +45,9 @@ namespace Server.Models
 
                 entity.Property(e => e.Date).HasColumnType("date");
 
-                entity.Property(e => e.Password).HasMaxLength(50);
+                entity.Property(e => e.IdPeople).HasMaxLength(250);
+
+                entity.Property(e => e.Password).HasMaxLength(250);
 
                 entity.Property(e => e.Role).HasMaxLength(50);
 
@@ -55,7 +57,7 @@ namespace Server.Models
             modelBuilder.Entity<AllPerson>(entity =>
             {
                 entity.HasKey(e => e.IdPerson)
-                    .HasName("PK__AllPeopl__A5D4E15BE594DE35");
+                    .HasName("PK__AllPeopl__A5D4E15B11C7FB59");
 
                 entity.Property(e => e.IdPerson).HasMaxLength(250);
 
@@ -105,7 +107,7 @@ namespace Server.Models
             modelBuilder.Entity<PerformenSeminar>(entity =>
             {
                 entity.HasKey(e => new { e.IdPerforment, e.IdSeminar })
-                    .HasName("PK__Performe__80EC2C6172DE90F1");
+                    .HasName("PK__Performe__80EC2C6177F2AA18");
 
                 entity.ToTable("PerformenSeminar");
 
@@ -149,7 +151,7 @@ namespace Server.Models
             modelBuilder.Entity<QuestionSurvey>(entity =>
             {
                 entity.HasKey(e => new { e.IdQuestion, e.IdSurvey })
-                    .HasName("PK__Question__E1194D416EE9900A");
+                    .HasName("PK__Question__E1194D41887AC8C6");
 
                 entity.ToTable("QuestionSurvey");
 
@@ -171,7 +173,7 @@ namespace Server.Models
             modelBuilder.Entity<RegisterSeminar>(entity =>
             {
                 entity.HasKey(e => new { e.IdAcc, e.IdSeminar })
-                    .HasName("PK__Register__2CCF44CAA5CEFBB0");
+                    .HasName("PK__Register__2CCF44CA09ABB14B");
 
                 entity.ToTable("RegisterSeminar");
 
@@ -191,7 +193,7 @@ namespace Server.Models
             modelBuilder.Entity<Score>(entity =>
             {
                 entity.HasKey(e => new { e.IdAcc, e.IdSurvey })
-                    .HasName("PK__Score__1409340BD18ED55A");
+                    .HasName("PK__Score__1409340B12A433C1");
 
                 entity.ToTable("Score");
 
@@ -222,7 +224,7 @@ namespace Server.Models
 
                 entity.Property(e => e.Name).HasMaxLength(250);
 
-                entity.Property(e => e.Place).HasMaxLength(1);
+                entity.Property(e => e.Place).HasMaxLength(50);
 
                 entity.Property(e => e.Presenters).HasMaxLength(250);
 

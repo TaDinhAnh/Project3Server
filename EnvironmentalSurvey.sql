@@ -11,8 +11,8 @@ GO
 CREATE TABLE Account(
 Id INT IDENTITY PRIMARY KEY,
 UserName NVARCHAR(50),
-[Password] NVARCHAR(50),
-IdPeople INT,
+[Password] NVARCHAR(250),
+IdPeople NVARCHAR(250),
 Class NVARCHAR(50),
 [Date] DATE,
 [Role] NVARCHAR(50),
@@ -93,7 +93,7 @@ Presenters NVARCHAR(250) CONSTRAINT FK_Seminar_AllPeople FOREIGN KEY(Presenters)
 TimeStart TIME,
 TimeEnd TIME,
 [Day] DATE,
-Place NVARCHAR,
+Place NVARCHAR(50),
 Maximum INT,
 NumberOfParticipants INT,
 [Descriptoin] NVARCHAR(500),
@@ -131,4 +131,33 @@ IdSeminar INT CONSTRAINT FK_PerformenSeminar_Seminar FOREIGN KEY(IdSeminar) REFE
 [Status] BIT,
 PRIMARY KEY (IdPerforment, IdSeminar)
 )
+GO
+
+INSERT INTO Account
+VALUES('account1','123','people1', 'class1', '2021-12-20','sv',1),
+('account2','123','people2', 'class1', '2021-12-20','sv',1),
+('account3','123','people3', 'class1', '2021-12-20','gv',1),
+('account4','123','people4', 'class1', '2021-12-20','sv',0);
+GO
+
+INSERT INTO Topic
+VALUES('Topic1',1),
+('Topic3',1),
+('Topic2',1),
+('Topic4',1);
+GO
+
+INSERT INTO AllPeople
+VALUES ('people1', 'TL1', 'img','2000-06-29',1,'sv','class1'),
+('people2', 'TL2', 'img','2000-06-29',1,'nv',null),
+('people3', 'TL3', 'img','2000-06-29',1,'gv',null),
+('people4', 'TL4', 'img','2000-06-29',1,'sv','class1');
+GO
+
+INSERT INTO Seminar
+VALUES (1,'img','seminar 1','people1', '08:00:00', '09:00:00','2021-06-06','HCM',100,50,'seminar 1',1),
+(1,'img','seminar 1','people2', '08:00:00', '09:00:00','2021-07-06','HCM',100,50,'seminar 1',1),
+(1,'img','seminar 1','people1', '08:00:00', '09:00:00','2021-05-06','HCM',100,50,'seminar 1',1),
+(1,'img','seminar 1','people3', '08:00:00', '09:00:00','2021-06-06','HCM',100,50,'seminar 1',0),
+(1,'img','seminar 1','people1', '08:00:00', '09:00:00','2021-06-11','HCM',100,50,'seminar 1',1);
 GO

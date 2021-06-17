@@ -30,6 +30,19 @@ namespace Server.Controllers
             }
         }
         [Produces("application/json")]
+        [HttpGet("findRecent")]
+        public IActionResult findRecent()
+        {
+            try
+            {
+                return Ok(seminarService.RecentSeminar(4));
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+        [Produces("application/json")]
         [HttpGet("find/{idSeminar}")]
         public IActionResult Find(int idSeminar)
         {

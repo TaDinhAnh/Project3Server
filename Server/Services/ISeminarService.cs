@@ -8,6 +8,7 @@ namespace Server.Services
     public interface ISeminarService
     {
         List<Seminar> FindAll();
+        List<Seminar> RecentSeminar(int n);
         Seminar Find(int idSeminar);
         string Create(Seminar seminar);
         string Del(int idSeminar);

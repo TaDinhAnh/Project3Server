@@ -58,3 +58,6 @@ C:\Users\Admin\Desktop\Project3Server\Server\obj\Debug\net5.0\Server.dll
 C:\Users\Admin\Desktop\Project3Server\Server\obj\Debug\net5.0\ref\Server.dll
 C:\Users\Admin\Desktop\Project3Server\Server\obj\Debug\net5.0\Server.pdb
 C:\Users\Admin\Desktop\Project3Server\Server\obj\Debug\net5.0\Server.genruntimeconfig.cache
+C:\Users\Admin\Desktop\Project3Server\Server\bin\Debug\net5.0\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\Admin\Desktop\Project3Server\Server\bin\Debug\net5.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+C:\Users\Admin\Desktop\Project3Server\Server\bin\Debug\net5.0\Newtonsoft.Json.Bson.dll
