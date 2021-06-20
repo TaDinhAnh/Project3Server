@@ -12,6 +12,8 @@ using Microsoft.EntityFrameworkCore.SqlServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Server.Services;
+using Microsoft.AspNetCore.Mvc.Formatters;
+
 namespace Server
 {
     public class Startup
@@ -23,7 +25,9 @@ namespace Server
         }
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers(opt =>
+                opt.OutputFormatters.RemoveType<HttpNoContentOutputFormatter>()
+                ).AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             var conn = configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<DatabaseContext>(option => option.UseLazyLoadingProxies().UseSqlServer(conn));
             services.AddScoped<IAccountService, AccountServiceImpl>();
@@ -35,6 +39,7 @@ namespace Server
             services.AddScoped<IPerformerService, PerformerServiceImpl>();
             services.AddScoped<ISeminarService, SeminarServiceImpl>();
             services.AddScoped<IQuestionService, QuestionServiceImpl>();
+            services.AddScoped<IFaqService, FaqServiceImpl>();
 
         }
 
@@ -51,7 +56,8 @@ namespace Server
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-;            });
+                ;
+            });
         }
     }
 }

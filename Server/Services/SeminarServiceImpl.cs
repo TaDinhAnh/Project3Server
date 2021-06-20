@@ -64,6 +64,18 @@ namespace Server.Services
             }
         }
 
+        public List<Seminar> RecentSeminar(int n)
+        {
+            try
+            {
+                return db.Seminars.Where(e => e.Day < DateTime.Now).OrderByDescending(e => e.Day).Take(n).ToList();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         public string Update(Seminar seminar)
         {
             try

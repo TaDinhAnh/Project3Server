@@ -16,7 +16,7 @@ namespace Server.Models
         public int Id { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
-        public int? IdPeople { get; set; }
+        public string IdPeople { get; set; }
         public string Class { get; set; }
         public DateTime? Date { get; set; }
         public string Role { get; set; }

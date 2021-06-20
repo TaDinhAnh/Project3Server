@@ -3,18 +3,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Server.Services;
 using Server.Models;
-
+using Server.Services;
 namespace Server.Controllers
 {
-    [Route("api/account")]
-    public class AccountController : Controller
+    [Route("api/faq")]
+    public class FaqController : Controller
     {
-        private IAccountService accountService;
-        public AccountController(IAccountService _accountService)
+        private IFaqService faqService;
+        public FaqController(IFaqService _faqService)
         {
-            accountService = _accountService;
+            faqService = _faqService;
         }
 
         [Produces("application/json")]
@@ -23,7 +22,7 @@ namespace Server.Controllers
         {
             try
             {
-                return Ok(accountService.FindAll());
+                return Ok(faqService.FindAll());
             }
             catch
             {
@@ -31,26 +30,26 @@ namespace Server.Controllers
             }
         }
         [Produces("application/json")]
-        [HttpGet("find/{idAcc}")]
-        public IActionResult Find(int idAcc)
+        [HttpGet("find/{idFaq}")]
+        public IActionResult Find(int idFaq)
         {
             try
             {
-                return Ok(accountService.Find(idAcc));
+                return Ok(faqService.Find(idFaq));
             }
             catch
             {
                 return BadRequest();
             }
         }
-        [Produces("text/plain")]
+        [Produces("application/json")]
         [Consumes("application/json")]
         [HttpPost("Create")]
-        public IActionResult Create([FromBody] Account account)
+        public IActionResult Create([FromBody] Faq faq)
         {
             try
             {
-                return Ok(accountService.Create(account));
+                return Ok(faqService.Create(faq));
             }
             catch
             {
@@ -58,29 +57,13 @@ namespace Server.Controllers
             }
         }
         [Produces("application/json")]
-        [Consumes("application/json")]
-        [HttpPost("Login")]
-        public IActionResult Login([FromBody] Account account)
-        {
-            try
-            {
-               
-           
-                return Ok(accountService.Login(account));
-            }
-            catch
-            {
-                return BadRequest();
-            }
-        }
-        [Produces("text/plain")]
         [Consumes("application/json")]
         [HttpPut("Update")]
-        public IActionResult Update([FromBody] Account account)
+        public IActionResult Update([FromBody] Faq faq)
         {
             try
             {
-                return Ok(accountService.Update(account));
+                return Ok(faqService.Update(faq));
             }
             catch
             {
@@ -89,12 +72,12 @@ namespace Server.Controllers
         }
         [Produces("application/json")]
         [Consumes("application/json")]
-        [HttpDelete("Del/{idAcc}")]
-        public IActionResult Del(int idAcc)
+        [HttpDelete("Del/{idFaq}")]
+        public IActionResult Del(int idFaq)
         {
             try
             {
-                return Ok(accountService.Del(idAcc));
+                return Ok(faqService.Del(idFaq));
             }
             catch
             {

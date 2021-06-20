@@ -21,23 +21,24 @@ namespace Server.Services
                 db.SaveChanges();
                 return "Seccuss";
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return e.Message;
             }
         }
 
-        public string Del(int idAcc)
+        public List<Account> Del(int idAcc)
         {
             try
             {
-                db.Accounts.Remove(db.Accounts.Find(idAcc));
+                var acc = db.Accounts.Find(idAcc);
+                acc.Status = false;
                 db.SaveChanges();
-                return "Seccuss";
+                return db.Accounts.ToList();
             }
             catch (Exception e)
             {
-                return e.Message;
+                return null;
             }
         }
 
@@ -65,20 +66,32 @@ namespace Server.Services
             }
         }
 
+        public Account Login(Account account)
+        {
+            try
+            {
+                return db.Accounts.FirstOrDefault(e => e.UserName == account.UserName && e.Password == account.Password && e.Status == true);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         public string Update(Account acc)
         {
             try
             {
-               
+
                 db.Entry(acc).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 db.SaveChanges();
                 return "success";
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return e.Message;
             }
-           
+
         }
     }
 }

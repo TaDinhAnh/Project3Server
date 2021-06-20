@@ -5,12 +5,13 @@ using System.Threading.Tasks;
 using Server.Models;
 namespace Server.Services
 {
-   public interface IAccountService
+    public interface IAccountService
     {
+        Account Login(Account account);
         List<Account> FindAll();
         Account Find(int idAcc);
         string Create(Account acc);
-        string Del(int idAcc);
+        List<Account> Del(int idAcc);
         string Update(Account acc);
     }
 }

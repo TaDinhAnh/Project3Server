@@ -20,6 +20,7 @@ namespace Server.Models
         public virtual DbSet<Account> Accounts { get; set; }
         public virtual DbSet<AllPerson> AllPeople { get; set; }
         public virtual DbSet<Answer> Answers { get; set; }
+        public virtual DbSet<Faq> Faqs { get; set; }
         public virtual DbSet<Img> Imgs { get; set; }
         public virtual DbSet<PerformenSeminar> PerformenSeminars { get; set; }
         public virtual DbSet<Performer> Performers { get; set; }
@@ -31,7 +32,7 @@ namespace Server.Models
         public virtual DbSet<Survey> Surveys { get; set; }
         public virtual DbSet<Topic> Topics { get; set; }
 
-     
+        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -45,7 +46,9 @@ namespace Server.Models
 
                 entity.Property(e => e.Date).HasColumnType("date");
 
-                entity.Property(e => e.Password).HasMaxLength(50);
+                entity.Property(e => e.IdPeople).HasMaxLength(250);
+
+                entity.Property(e => e.Password).HasMaxLength(250);
 
                 entity.Property(e => e.Role).HasMaxLength(50);
 
@@ -55,7 +58,7 @@ namespace Server.Models
             modelBuilder.Entity<AllPerson>(entity =>
             {
                 entity.HasKey(e => e.IdPerson)
-                    .HasName("PK__AllPeopl__A5D4E15BE594DE35");
+                    .HasName("PK__AllPeopl__A5D4E15BE0F08938");
 
                 entity.Property(e => e.IdPerson).HasMaxLength(250);
 
@@ -90,6 +93,17 @@ namespace Server.Models
                     .HasConstraintName("FK_Answer_Question");
             });
 
+            modelBuilder.Entity<Faq>(entity =>
+            {
+                entity.ToTable("FAQ");
+
+                entity.Property(e => e.AnSwer).HasMaxLength(250);
+
+                entity.Property(e => e.Faq1)
+                    .HasMaxLength(250)
+                    .HasColumnName("Faq");
+            });
+
             modelBuilder.Entity<Img>(entity =>
             {
                 entity.ToTable("Img");
@@ -105,7 +119,7 @@ namespace Server.Models
             modelBuilder.Entity<PerformenSeminar>(entity =>
             {
                 entity.HasKey(e => new { e.IdPerforment, e.IdSeminar })
-                    .HasName("PK__Performe__80EC2C6172DE90F1");
+                    .HasName("PK__Performe__80EC2C6140FAB22D");
 
                 entity.ToTable("PerformenSeminar");
 
@@ -149,7 +163,7 @@ namespace Server.Models
             modelBuilder.Entity<QuestionSurvey>(entity =>
             {
                 entity.HasKey(e => new { e.IdQuestion, e.IdSurvey })
-                    .HasName("PK__Question__E1194D416EE9900A");
+                    .HasName("PK__Question__E1194D410B2674A7");
 
                 entity.ToTable("QuestionSurvey");
 
@@ -171,7 +185,7 @@ namespace Server.Models
             modelBuilder.Entity<RegisterSeminar>(entity =>
             {
                 entity.HasKey(e => new { e.IdAcc, e.IdSeminar })
-                    .HasName("PK__Register__2CCF44CAA5CEFBB0");
+                    .HasName("PK__Register__2CCF44CABE6EA3E2");
 
                 entity.ToTable("RegisterSeminar");
 
@@ -191,7 +205,7 @@ namespace Server.Models
             modelBuilder.Entity<Score>(entity =>
             {
                 entity.HasKey(e => new { e.IdAcc, e.IdSurvey })
-                    .HasName("PK__Score__1409340BD18ED55A");
+                    .HasName("PK__Score__1409340BD92585C2");
 
                 entity.ToTable("Score");
 
@@ -222,7 +236,7 @@ namespace Server.Models
 
                 entity.Property(e => e.Name).HasMaxLength(250);
 
-                entity.Property(e => e.Place).HasMaxLength(1);
+                entity.Property(e => e.Place).HasMaxLength(50);
 
                 entity.Property(e => e.Presenters).HasMaxLength(250);
 
