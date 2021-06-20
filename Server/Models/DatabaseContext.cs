@@ -32,7 +32,7 @@ namespace Server.Models
         public virtual DbSet<Survey> Surveys { get; set; }
         public virtual DbSet<Topic> Topics { get; set; }
 
-        
+     
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -48,6 +48,8 @@ namespace Server.Models
 
                 entity.Property(e => e.IdPeople).HasMaxLength(250);
 
+                entity.Property(e => e.Img).HasMaxLength(250);
+
                 entity.Property(e => e.Password).HasMaxLength(250);
 
                 entity.Property(e => e.Role).HasMaxLength(50);
@@ -58,7 +60,7 @@ namespace Server.Models
             modelBuilder.Entity<AllPerson>(entity =>
             {
                 entity.HasKey(e => e.IdPerson)
-                    .HasName("PK__AllPeopl__A5D4E15BE0F08938");
+                    .HasName("PK__AllPeopl__A5D4E15B43E225C0");
 
                 entity.Property(e => e.IdPerson).HasMaxLength(250);
 
@@ -119,7 +121,7 @@ namespace Server.Models
             modelBuilder.Entity<PerformenSeminar>(entity =>
             {
                 entity.HasKey(e => new { e.IdPerforment, e.IdSeminar })
-                    .HasName("PK__Performe__80EC2C6140FAB22D");
+                    .HasName("PK__Performe__80EC2C616D0735A1");
 
                 entity.ToTable("PerformenSeminar");
 
@@ -163,7 +165,7 @@ namespace Server.Models
             modelBuilder.Entity<QuestionSurvey>(entity =>
             {
                 entity.HasKey(e => new { e.IdQuestion, e.IdSurvey })
-                    .HasName("PK__Question__E1194D410B2674A7");
+                    .HasName("PK__Question__E1194D418835D9AE");
 
                 entity.ToTable("QuestionSurvey");
 
@@ -185,7 +187,7 @@ namespace Server.Models
             modelBuilder.Entity<RegisterSeminar>(entity =>
             {
                 entity.HasKey(e => new { e.IdAcc, e.IdSeminar })
-                    .HasName("PK__Register__2CCF44CABE6EA3E2");
+                    .HasName("PK__Register__2CCF44CADC47D888");
 
                 entity.ToTable("RegisterSeminar");
 
@@ -205,7 +207,7 @@ namespace Server.Models
             modelBuilder.Entity<Score>(entity =>
             {
                 entity.HasKey(e => new { e.IdAcc, e.IdSurvey })
-                    .HasName("PK__Score__1409340BD92585C2");
+                    .HasName("PK__Score__1409340B4C789FE8");
 
                 entity.ToTable("Score");
 
