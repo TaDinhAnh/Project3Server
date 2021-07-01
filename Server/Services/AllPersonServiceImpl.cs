@@ -40,11 +40,11 @@ namespace Server.Services
             }
         }
 
-        public AllPerson Find(int idAllperson)
+        public AllPerson Find(string idAllperson)
         {
             try
             {
-                return db.AllPeople.Find(idAllperson);
+                return db.AllPeople.SingleOrDefault(e => e.IdPerson == idAllperson);
             }
             catch
             {
@@ -58,6 +58,18 @@ namespace Server.Services
             try
             {
                 return db.AllPeople.ToList();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public List<AllPerson> FindStaff()
+        {
+            try
+            {
+                return db.AllPeople.Where(e => e.Position == "gv" || e.Position == "nv").ToList();
             }
             catch
             {

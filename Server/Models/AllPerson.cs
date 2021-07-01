@@ -9,6 +9,7 @@ namespace Server.Models
     {
         public AllPerson()
         {
+            Accounts = new HashSet<Account>();
             Seminars = new HashSet<Seminar>();
         }
 
@@ -20,6 +21,7 @@ namespace Server.Models
         public string Position { get; set; }
         public string Class { get; set; }
 
+        public virtual ICollection<Account> Accounts { get; set; }
         public virtual ICollection<Seminar> Seminars { get; set; }
     }
 }

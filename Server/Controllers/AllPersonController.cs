@@ -30,8 +30,21 @@ namespace Server.Controllers
             }
         }
         [Produces("application/json")]
+        [HttpGet("findStaff")]
+        public IActionResult FindStaff()
+        {
+            try
+            {
+                return Ok(allPersonService.FindStaff());
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+        [Produces("application/json")]
         [HttpGet("find/{idAllPerson}")]
-        public IActionResult Find(int idAllPerson)
+        public IActionResult Find(string idAllPerson)
         {
             try
             {
@@ -70,6 +83,8 @@ namespace Server.Controllers
                 return BadRequest();
             }
         }
+      
+      
         [Produces("text/plain")]
         [Consumes("application/json")]
         [HttpDelete("Del/{idAllPerson}")]

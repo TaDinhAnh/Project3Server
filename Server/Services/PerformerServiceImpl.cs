@@ -79,5 +79,22 @@ namespace Server.Services
             }
 
         }
+        public List<Performer> Find2(int idSeminar)
+        {
+            try
+            {
+
+                return (from s in db.Performers
+                        where !(from o in db.PerformenSeminars
+                                where o.IdSeminar == idSeminar
+                                select o.IdPerforment).Contains(s.Id)
+                        select s).ToList();
+            }
+            catch
+            {
+                return null;
+            }
+
+        }
     }
 }

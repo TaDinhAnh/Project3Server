@@ -42,6 +42,19 @@ namespace Server.Controllers
                 return BadRequest();
             }
         }
+        [Produces("application/json")]
+        [HttpGet("find2/{idSeminar}")]
+        public IActionResult Find2(int idSeminar)
+        {
+            try
+            {
+                return Ok(performerService.Find2(idSeminar));
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
         [Produces("text/plain")]
         [Consumes("application/json")]
         [HttpPost("Create")]

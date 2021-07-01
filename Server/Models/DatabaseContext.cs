@@ -20,6 +20,7 @@ namespace Server.Models
         public virtual DbSet<Account> Accounts { get; set; }
         public virtual DbSet<AllPerson> AllPeople { get; set; }
         public virtual DbSet<Answer> Answers { get; set; }
+        public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<Faq> Faqs { get; set; }
         public virtual DbSet<Img> Imgs { get; set; }
         public virtual DbSet<PerformenSeminar> PerformenSeminars { get; set; }
@@ -42,9 +43,16 @@ namespace Server.Models
             {
                 entity.ToTable("Account");
 
+                entity.HasIndex(e => e.Email, "UQ__Account__A9D10534A289831E")
+                    .IsUnique();
+
+                entity.Property(e => e.Active).HasDefaultValueSql("((0))");
+
                 entity.Property(e => e.Class).HasMaxLength(50);
 
                 entity.Property(e => e.Date).HasColumnType("date");
+
+                entity.Property(e => e.Email).HasMaxLength(100);
 
                 entity.Property(e => e.IdPeople).HasMaxLength(250);
 
@@ -54,13 +62,20 @@ namespace Server.Models
 
                 entity.Property(e => e.Role).HasMaxLength(50);
 
+                entity.Property(e => e.Status).HasDefaultValueSql("((0))");
+
                 entity.Property(e => e.UserName).HasMaxLength(50);
+
+                entity.HasOne(d => d.IdPeopleNavigation)
+                    .WithMany(p => p.Accounts)
+                    .HasForeignKey(d => d.IdPeople)
+                    .HasConstraintName("FK_Account_AllPeople");
             });
 
             modelBuilder.Entity<AllPerson>(entity =>
             {
                 entity.HasKey(e => e.IdPerson)
-                    .HasName("PK__AllPeopl__A5D4E15B43E225C0");
+                    .HasName("PK__AllPeopl__A5D4E15BD6453787");
 
                 entity.Property(e => e.IdPerson).HasMaxLength(250);
 
@@ -95,6 +110,16 @@ namespace Server.Models
                     .HasConstraintName("FK_Answer_Question");
             });
 
+            modelBuilder.Entity<Comment>(entity =>
+            {
+                entity.ToTable("Comment");
+
+                entity.HasOne(d => d.IdAccNavigation)
+                    .WithMany(p => p.Comments)
+                    .HasForeignKey(d => d.IdAcc)
+                    .HasConstraintName("FK_Comment_Account");
+            });
+
             modelBuilder.Entity<Faq>(entity =>
             {
                 entity.ToTable("FAQ");
@@ -121,7 +146,7 @@ namespace Server.Models
             modelBuilder.Entity<PerformenSeminar>(entity =>
             {
                 entity.HasKey(e => new { e.IdPerforment, e.IdSeminar })
-                    .HasName("PK__Performe__80EC2C616D0735A1");
+                    .HasName("PK__Performe__80EC2C6136A9AA9A");
 
                 entity.ToTable("PerformenSeminar");
 
@@ -165,7 +190,7 @@ namespace Server.Models
             modelBuilder.Entity<QuestionSurvey>(entity =>
             {
                 entity.HasKey(e => new { e.IdQuestion, e.IdSurvey })
-                    .HasName("PK__Question__E1194D418835D9AE");
+                    .HasName("PK__Question__E1194D418BEA1215");
 
                 entity.ToTable("QuestionSurvey");
 
@@ -187,7 +212,7 @@ namespace Server.Models
             modelBuilder.Entity<RegisterSeminar>(entity =>
             {
                 entity.HasKey(e => new { e.IdAcc, e.IdSeminar })
-                    .HasName("PK__Register__2CCF44CADC47D888");
+                    .HasName("PK__Register__2CCF44CA203CEC3A");
 
                 entity.ToTable("RegisterSeminar");
 
@@ -207,7 +232,7 @@ namespace Server.Models
             modelBuilder.Entity<Score>(entity =>
             {
                 entity.HasKey(e => new { e.IdAcc, e.IdSurvey })
-                    .HasName("PK__Score__1409340B4C789FE8");
+                    .HasName("PK__Score__1409340B8475EB6F");
 
                 entity.ToTable("Score");
 

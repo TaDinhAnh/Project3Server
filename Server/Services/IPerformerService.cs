@@ -12,5 +12,6 @@ namespace Server.Services
         string Create(Performer performer);
         string Del(int idPerformer);
         string Update(Performer performer);
+        List<Performer> Find2(int idSeminar);
     }
 }

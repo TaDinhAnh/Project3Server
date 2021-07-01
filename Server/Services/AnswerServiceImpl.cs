@@ -12,31 +12,32 @@ namespace Server.Services
         {
             db = databaseContext;
         }
-        public string Create(Answer answer)
+        public List<Answer> Create(Answer answer)
         {
             try
             {
                 db.Answers.Add(answer);
                 db.SaveChanges();
-                return "Seccuss";
+                return db.Answers.Where(e => e.IdQuestion == answer.IdQuestion).ToList();
             }
             catch (Exception e)
             {
-                return e.Message;
+                return null;
             }
         }
 
-        public string Del(int idAnswer)
+        public List<Answer> Del(int idAnswer, int idQues)
         {
             try
             {
-                db.Answers.Remove(db.Answers.Find(idAnswer));
+                var answer = db.Answers.Where(e => e.Id == idAnswer && e.IdQuestion == idQues).SingleOrDefault();
+                db.Answers.Remove(answer);
                 db.SaveChanges();
-                return "Seccuss";
+                return db.Questions.Find(idQues).Answers.Select(e => new Answer { Id = e.Id, IdQuestion = e.IdQuestion, Answer1 = e.Answer1, Updated = e.Updated, Status = e.Status }).ToList();
             }
-            catch (Exception e)
+            catch
             {
-                return e.Message;
+                return null;
             }
         }
 
@@ -44,7 +45,8 @@ namespace Server.Services
         {
             try
             {
-                return db.Answers.Find(idAnswer);
+                var a = db.Answers.Find(idAnswer);
+                return a;
             }
             catch
             {

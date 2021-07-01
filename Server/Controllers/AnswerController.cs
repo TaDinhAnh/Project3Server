@@ -42,7 +42,7 @@ namespace Server.Controllers
                 return BadRequest();
             }
         }
-        [Produces("text/plain")]
+        [Produces("application/json")]
         [Consumes("application/json")]
         [HttpPost("Create")]
         public IActionResult Create([FromBody] Answer answer)
@@ -70,14 +70,13 @@ namespace Server.Controllers
                 return BadRequest();
             }
         }
-        [Produces("text/plain")]
-        [Consumes("application/json")]
-        [HttpDelete("Del/{idAnswer}")]
-        public IActionResult Del(int idAnswer)
+        [Produces("application/json")]
+        [HttpDelete("Del/{idAnswer}/{idQues}")]
+        public IActionResult Del(int idAnswer, int idQues)
         {
             try
             {
-                return Ok(answerService.Del(idAnswer));
+                return Ok(answerService.Del(idAnswer, idQues));
             }
             catch
             {

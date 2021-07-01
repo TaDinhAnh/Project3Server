@@ -40,6 +40,8 @@ namespace Server
             services.AddScoped<ISeminarService, SeminarServiceImpl>();
             services.AddScoped<IQuestionService, QuestionServiceImpl>();
             services.AddScoped<IFaqService, FaqServiceImpl>();
+            services.AddScoped<IScoreService, ScoreServiceImpl>();
+   
 
         }
 

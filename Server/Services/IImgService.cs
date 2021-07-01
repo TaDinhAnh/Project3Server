@@ -12,5 +12,7 @@ namespace Server.Services
         string Create(Img img);
         string Del(int idImg);
         string Update(Img img);
+        List<Img> GetImgSer(int idSemianr);
+        string DelImgSer(int idSeminar, int idImg);
     }
 }

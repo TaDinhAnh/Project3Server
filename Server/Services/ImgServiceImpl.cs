@@ -40,6 +40,21 @@ namespace Server.Services
             }
         }
 
+        public string DelImgSer(int idSeminar, int idImg)
+        {
+            try
+            {
+                var img = db.Imgs.Where(e => e.IdSeminar == idSeminar && e.Id == idImg).SingleOrDefault();
+                db.Imgs.Remove(img);
+                db.SaveChanges();
+                return "Seccuss";
+            }
+            catch (Exception e)
+            {
+                return e.Message;
+            }
+        }
+
         public Img Find(int idImg)
         {
             try
@@ -57,6 +72,18 @@ namespace Server.Services
             try
             {
                 return db.Imgs.ToList();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public List<Img> GetImgSer(int idSemianr)
+        {
+            try
+            {
+                return db.Imgs.Where(e => e.IdSeminar == idSemianr).ToList();
             }
             catch
             {

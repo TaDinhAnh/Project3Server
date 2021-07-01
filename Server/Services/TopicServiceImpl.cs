@@ -56,7 +56,7 @@ namespace Server.Services
         {
             try
             {
-                return db.Topics.ToList();
+                return db.Topics.Where(e => e.Status == true).ToList();
             }
             catch
             {

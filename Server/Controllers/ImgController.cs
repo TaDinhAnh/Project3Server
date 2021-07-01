@@ -84,5 +84,33 @@ namespace Server.Controllers
                 return BadRequest();
             }
         }
+        [Produces("application/json")]
+
+        [HttpGet("getImgSer/{idSeminar}")]
+        public IActionResult GetImgSer(int idSeminar)
+        {
+            try
+            {
+                return Ok(imgService.GetImgSer(idSeminar));
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+        [Produces("application/json")]
+
+        [HttpDelete("delImgSer/{idSeminar}/{idImg}")]
+        public IActionResult DelImgSer(int idSeminar, int idImg)
+        {
+            try
+            {
+                return Ok(imgService.DelImgSer(idSeminar, idImg));
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
     }
 }

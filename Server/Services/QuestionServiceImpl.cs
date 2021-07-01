@@ -26,17 +26,17 @@ namespace Server.Services
             }
         }
 
-        public string Del(int idQuestion)
+        public List<Question> Del(int idQuestion)
         {
             try
             {
-                db.Questions.Remove(db.Questions.Find(idQuestion));
+                db.Questions.Find(idQuestion).Status = false;
                 db.SaveChanges();
-                return "Seccuss";
+                return db.Questions.ToList();
             }
-            catch (Exception e)
+            catch
             {
-                return e.Message;
+                return null;
             }
         }
 

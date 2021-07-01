@@ -5,6 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Server.Models;
 using Server.Services;
+using Newtonsoft.Json;
+using Server.DTO;
+
 namespace Server.Controllers
 {
     [Route("api/seminar")]
@@ -30,12 +33,25 @@ namespace Server.Controllers
             }
         }
         [Produces("application/json")]
-        [HttpGet("findRecent")]
-        public IActionResult findRecent()
+        [HttpGet("findAll2")]
+        public IActionResult FindAll2()
         {
             try
             {
-                return Ok(seminarService.RecentSeminar(4));
+                return Ok(seminarService.FindAll2());
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+        [Produces("application/json")]
+        [HttpGet("findRecent/{n}")]
+        public IActionResult findRecent(int n)
+        {
+            try
+            {
+                return Ok(seminarService.RecentSeminar(n));
             }
             catch
             {
@@ -58,10 +74,25 @@ namespace Server.Controllers
         [Produces("text/plain")]
         [Consumes("application/json")]
         [HttpPost("Create")]
-        public IActionResult Create([FromBody] Seminar seminar)
+        public IActionResult Create([FromBody] SeminarDTO seminarDTO)
         {
             try
             {
+                var seminar = new Seminar
+                {
+                    Id = 0,
+                    IdTopic = seminarDTO.IdTopic,
+                    Img = seminarDTO.Img,
+                    Name = seminarDTO.Name,
+                    Presenters = seminarDTO.Presenters,
+                    TimeStart = TimeSpan.Parse(seminarDTO.TimeStart),
+                    TimeEnd = TimeSpan.Parse(seminarDTO.TimeEnd),
+                    Day = seminarDTO.Day,
+                    Place = seminarDTO.Place,
+                    Maximum = seminarDTO.Maximum,
+                    Descriptoin = seminarDTO.Descriptoin,
+                    Status = true
+                };
                 return Ok(seminarService.Create(seminar));
             }
             catch
@@ -72,19 +103,44 @@ namespace Server.Controllers
         [Produces("text/plain")]
         [Consumes("application/json")]
         [HttpPut("Update")]
-        public IActionResult Update([FromBody] Seminar seminar)
+        public IActionResult Update([FromBody] SeminarDTO seminarDTO)
         {
             try
             {
-                return Ok(seminarService.Update(seminar));
+                return Ok(seminarService.Update(seminarDTO));
             }
             catch
             {
                 return BadRequest();
             }
         }
-        [Produces("text/plain")]
-        [Consumes("application/json")]
+        [Produces("application/json")]
+        [HttpGet("UpdatePre/{idSeminar}/{idPrecenter}")]
+        public IActionResult UpdatePre(int idSeminar, string idPrecenter)
+        {
+            try
+            {
+                return Ok(seminarService.UpdatePre(idSeminar, idPrecenter));
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+        [Produces("application/json")]
+        [HttpGet("delPer/{idSeminar}/{idPerforment}")]
+        public IActionResult DelPerforment(int idSeminar, int idPerforment)
+        {
+            try
+            {
+                return Ok(seminarService.DelPerforment(idSeminar, idPerforment));
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+        [Produces("application/json")]
         [HttpDelete("Del/{idSeminar}")]
         public IActionResult Del(int idSeminar)
         {
@@ -97,5 +153,20 @@ namespace Server.Controllers
                 return BadRequest();
             }
         }
+        [Produces("application/json")]
+        [Consumes("application/json")]
+        [HttpPost("addperforment")]
+        public IActionResult AddPerforment([FromBody] PerformenSeminar performenSeminar)
+        {
+            try
+            {
+                return Ok(seminarService.AddPerforment(performenSeminar));
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+     
     }
 }

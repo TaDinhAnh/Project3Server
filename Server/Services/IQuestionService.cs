@@ -10,7 +10,7 @@ namespace Server.Services
         List<Question> FindAll();
         Question Find(int idQuestion);
         string Create(Question question);
-        string Del(int iduestion);
+        List<Question> Del(int iduestion);
         string Update(Question question);
     }
 }

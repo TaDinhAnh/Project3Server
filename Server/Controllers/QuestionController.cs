@@ -70,8 +70,7 @@ namespace Server.Controllers
                 return BadRequest();
             }
         }
-        [Produces("text/plain")]
-        [Consumes("application/json")]
+        [Produces("application/json")]
         [HttpDelete("Del/{idQuestionic}")]
         public IActionResult Del(int idQuestionic)
         {

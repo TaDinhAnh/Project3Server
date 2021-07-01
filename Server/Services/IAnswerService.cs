@@ -9,8 +9,8 @@ namespace Server.Services
     {
         List<Answer> FindAll();
         Answer Find(int idAnswer);
-        string Create(Answer answer);
-        string Del(int idAnswer);
+        List<Answer> Create(Answer answer);
+        List<Answer> Del(int idAnswer, int idQues);
         string Update(Answer answer);
     }
 }

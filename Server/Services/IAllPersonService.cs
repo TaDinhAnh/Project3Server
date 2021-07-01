@@ -8,9 +8,10 @@ namespace Server.Services
     public interface IAllPersonService
     {
         List<AllPerson> FindAll();
-        AllPerson Find(int idAllPerson);
+        AllPerson Find(string idAllPerson);
         string Create(AllPerson allPerson);
         string Del(int idAllPerson);
         string Update(AllPerson allPerson);
+        List<AllPerson> FindStaff();
     }
 }
