@@ -12,17 +12,17 @@ namespace Server.Services
         {
             db = databaseContext;
         }
-        public string Create(Question question)
+        public List<Question> Create(Question question)
         {
             try
             {
                 db.Questions.Add(question);
                 db.SaveChanges();
-                return "Seccuss";
+                return db.Questions.Select(e => new Question { Id = e.Id, Question1 = e.Question1, Updated = e.Updated, Status = e.Status }).ToList();
             }
-            catch (Exception e)
+            catch
             {
-                return e.Message;
+                return null;
             }
         }
 
@@ -64,18 +64,20 @@ namespace Server.Services
             }
         }
 
-        public string Update(Question question)
+        public Question Update(Question question)
         {
             try
             {
-
-                db.Entry(question).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                var ques = db.Questions.Find(question.Id);
+                ques.Question1 = question.Question1;
+                ques.Status = question.Status;
+                ques.Updated = DateTime.Now;
                 db.SaveChanges();
-                return "success";
+                return ques;
             }
             catch (Exception e)
             {
-                return e.Message;
+                return null;
             }
 
         }

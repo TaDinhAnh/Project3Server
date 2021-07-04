@@ -8,7 +8,6 @@ namespace Server.DTO
     public class SeminarDTO
     {
         public int? Id { get; set; }
-        public int? IdTopic { get; set; }
         public string Img { get; set; }
         public string Name { get; set; }
         public string Presenters { get; set; }

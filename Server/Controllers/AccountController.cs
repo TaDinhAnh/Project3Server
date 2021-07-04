@@ -64,8 +64,8 @@ namespace Server.Controllers
         {
             try
             {
-               
-           
+
+
                 return Ok(accountService.Login(account));
             }
             catch
@@ -95,6 +95,71 @@ namespace Server.Controllers
             try
             {
                 return Ok(accountService.Del(idAcc));
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+        [Produces("text/plain")]
+        [HttpGet("countActive")]
+        public IActionResult CountActive()
+        {
+            try
+            {
+                return Ok(accountService.CountActive() + " ");
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+        [Produces("application/json")]
+        [HttpGet("findAccActive")]
+        public IActionResult FindAccActive()
+        {
+            try
+            {
+                return Ok(accountService.FindAccAcitve());
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+        [Produces("text/plain")]
+        [HttpGet("accept/{idAcc}")]
+        public IActionResult Accept(int idAcc)
+        {
+            try
+            {
+                return Ok(accountService.Accept(idAcc));
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+        [Produces("text/plain")]
+        [HttpDelete("delAccept/{idAcc}")]
+        public IActionResult DelAccept(int idAcc)
+        {
+            try
+            {
+                return Ok(accountService.DelAccept(idAcc));
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+        [Produces("text/plain")]
+        [HttpGet("countAcc/{idPeople}")]
+        public IActionResult CountAcc(string idPeople)
+        {
+            try
+            {
+                return Ok(accountService.CountAcc(idPeople)+" ");
             }
             catch
             {

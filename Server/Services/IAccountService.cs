@@ -13,5 +13,10 @@ namespace Server.Services
         string Create(Account acc);
         List<Account> Del(int idAcc);
         string Update(Account acc);
+        int CountActive();
+        List<Account> FindAccAcitve();
+        string Accept(int idAccount);
+        string DelAccept(int idAccount);
+        int CountAcc(string idPeople);
     }
 }

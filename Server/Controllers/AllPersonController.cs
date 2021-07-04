@@ -86,9 +86,8 @@ namespace Server.Controllers
       
       
         [Produces("text/plain")]
-        [Consumes("application/json")]
-        [HttpDelete("Del/{idAllPerson}")]
-        public IActionResult Del(int idAllPerson)
+        [HttpDelete("del/{idAllPerson}")]
+        public IActionResult Del(string idAllPerson)
         {
             try
             {

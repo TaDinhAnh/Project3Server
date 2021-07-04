@@ -45,8 +45,7 @@ namespace Server.Services
         {
             try
             {
-                var a = db.Answers.Find(idAnswer);
-                return a;
+                return db.Answers.Find(idAnswer);
             }
             catch
             {
@@ -66,18 +65,18 @@ namespace Server.Services
             }
         }
 
-        public string Update(Answer answer)
+        public List<Answer> Update(Answer answer)
         {
             try
             {
 
                 db.Entry(answer).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 db.SaveChanges();
-                return "success";
+                return db.Answers.Where(e => e.IdQuestion == answer.IdQuestion).Select(e => new Answer { Id = e.Id, IdQuestion = e.IdQuestion, Answer1 = e.Answer1, Updated = e.Updated, Status = e.Status }).ToList();
             }
-            catch (Exception e)
+            catch
             {
-                return e.Message;
+                return null;
             }
 
         }

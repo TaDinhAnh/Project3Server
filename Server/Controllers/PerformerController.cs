@@ -30,6 +30,19 @@ namespace Server.Controllers
             }
         }
         [Produces("application/json")]
+        [HttpGet("findAll2")]
+        public IActionResult FindAll2()
+        {
+            try
+            {
+                return Ok(performerService.FindAll2());
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+        [Produces("application/json")]
         [HttpGet("find/{idPerformer}")]
         public IActionResult Find(int idPerformer)
         {
@@ -84,7 +97,6 @@ namespace Server.Controllers
             }
         }
         [Produces("text/plain")]
-        [Consumes("application/json")]
         [HttpDelete("Del/{idPerformer}")]
         public IActionResult Del(int idPerformer)
         {

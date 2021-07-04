@@ -26,11 +26,11 @@ namespace Server.Services
             }
         }
 
-        public string Del(int idAllPerson)
+        public string Del(string idAllPerson)
         {
             try
             {
-                db.AllPeople.Remove(db.AllPeople.Find(idAllPerson));
+                db.AllPeople.Where(e => e.IdPerson == idAllPerson).SingleOrDefault().Status = false;
                 db.SaveChanges();
                 return "Seccuss";
             }
@@ -42,14 +42,19 @@ namespace Server.Services
 
         public AllPerson Find(string idAllperson)
         {
-            try
+
+            return db.AllPeople.Where(e => e.IdPerson == idAllperson).Select(e => new AllPerson
             {
-                return db.AllPeople.SingleOrDefault(e => e.IdPerson == idAllperson);
-            }
-            catch
-            {
-                return null;
-            }
+                IdPerson = idAllperson,
+                Class = e.Class,
+                Dob = e.Dob,
+                Gender = e.Gender,
+                Img = e.Img,
+                Name = e.Name,
+                Position = e.Position,
+                Status = e.Status
+            }).SingleOrDefault();
+
         }
 
 
@@ -69,7 +74,7 @@ namespace Server.Services
         {
             try
             {
-                return db.AllPeople.Where(e => e.Position == "gv" || e.Position == "nv").ToList();
+                return db.AllPeople.Where(e => e.Position == "gv" || e.Position == "nv" && e.Status == true).ToList();
             }
             catch
             {
@@ -81,7 +86,14 @@ namespace Server.Services
         {
             try
             {
-                db.Entry(allPerson).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                var person = db.AllPeople.Where(e => e.IdPerson == allPerson.IdPerson).FirstOrDefault();
+                person.Name = allPerson.Name;
+                person.Position = allPerson.Position;
+                person.Class = allPerson.Class;
+                person.Dob = allPerson.Dob;
+                person.Gender = allPerson.Gender;
+                person.Status = allPerson.Status;
+                if (allPerson.Img != null) person.Img = allPerson.Img;
                 db.SaveChanges();
                 return "success";
             }

@@ -15,7 +15,8 @@ Img NVARCHAR(250),
 DOB DATE,
 Gender BIT,
 Position NVARCHAR(50),
-Class NVARCHAR(50)
+Class NVARCHAR(50),
+[Status] BIT
 )
 GO 
 
@@ -25,12 +26,12 @@ UserName NVARCHAR(50),
 Email NVARCHAR(100) Unique,
 [Password] NVARCHAR(250),
 Img NVARCHAR(250),
-IdPeople NVARCHAR(250) CONSTRAINT FK_Account_AllPeople FOREIGN KEY(IdPeople) REFERENCES AllPeople(IdPerson),
+IdPeople NVARCHAR(250),
 Class NVARCHAR(50),
 [Date] DATE,
 [Role] NVARCHAR(50),
-[Status] BIT Default 0,
-Active BIT Default 0
+[Status] BIT,
+Active BIT
 )
 GO
 
@@ -41,6 +42,7 @@ Id INT IDENTITY PRIMARY KEY,
 [NAME] NVARCHAR(50),
 [Description] NVARCHAR(500),
 Updated DATE,
+Active BIT,
 [Status] BIT
 )
 GO
@@ -83,16 +85,9 @@ PRIMARY KEY(IdAcc, IdSurvey)
 )
 GO
 
-
-CREATE TABLE Topic(
-Id INT IDENTITY PRIMARY KEY,
-Topic NVARCHAR(50),
-[Status] BIT
-)
 GO
 CREATE TABLE Seminar(
 Id INT IDENTITY PRIMARY KEY,
-IdTopic INT CONSTRAINT FK_Seminar_Topic FOREIGN KEY(IdTopic) REFERENCES Topic(Id),
 Img NVARCHAR(250),
 [Name] NVARCHAR(250),
 Presenters NVARCHAR(250) CONSTRAINT FK_Seminar_AllPeople FOREIGN KEY(Presenters) REFERENCES AllPeople(IdPerson),
@@ -102,6 +97,7 @@ TimeEnd TIME,
 Place NVARCHAR(50),
 Maximum INT,
 NumberOfParticipants INT,
+Active BIT,
 [Descriptoin] NVARCHAR(500),
 [Status] BIT
 )
@@ -155,43 +151,41 @@ IdAcc INT CONSTRAINT FK_Comment_Account FOREIGN KEY(IdAcc) REFERENCES Account(Id
 )
 GO
 INSERT INTO AllPeople
-VALUES ('people1', 'TL1', 'avatar1.jpg','2000-06-29',1,'sv','class1'),
-('people2', 'TL2', 'avatar1.jpg','2000-06-29',1,'nv',null),
-('people3', 'TL3', 'avatar1.jpg','2000-06-29',1,'gv',null),
-('people4', 'TL4', 'avatar1.jpg','2000-06-29',0,'sv','class1'),
-('people6', 'TL2', 'avatar1.jpg','2000-06-29',0,'sv','class2'),
-('people7', 'TL3', 'avatar1.jpg','2000-06-29',1,'sv','class2'),
-('people8', 'TL4', 'avatar1.jpg','2000-06-29',0,'sv','class3'),
-('people9', 'TL2', 'avatar1.jpg','2000-06-29',1,'sv','class3'),
-('people10', 'TL3', 'avatar1.jpg','2000-06-29',1,'sv','class4'),
-('people11', 'TL4', 'avatar1.jpg','2000-06-29',0,'sv','class4'),
-('people12', 'TL2', 'avatar1.jpg','2000-06-29',1,'sv','class5'),
-('people13', 'TL3', 'avatar1.jpg','2000-06-29',0,'sv','class5'),
-('people14', 'TL4', 'avatar1.jpg','2000-06-29',1,'sv','class6'),
-('people15', 'TL2', 'avatar1.jpg','2000-06-29',0,'nv',null),
-('people16', 'TL3', 'avatar1.jpg','2000-06-29',0,'gv',null);
+VALUES ('people1', 'TL1', 'avatar1.jpg','2000-06-29',1,'sv','class1',1),
+('people2', 'TL2', 'avatar1.jpg','2000-06-29',1,'nv',null,1),
+('people3', 'TL3', 'avatar1.jpg','2000-06-29',1,'gv',null,1),
+('people4', 'TL4', 'avatar1.jpg','2000-06-29',0,'sv','class1',1),
+('people6', 'TL2', 'avatar1.jpg','2000-06-29',0,'sv','class2',1),
+('people7', 'TL3', 'avatar1.jpg','2000-06-29',1,'sv','class2',1),
+('people8', 'TL4', 'avatar1.jpg','2000-06-29',0,'sv','class3',1),
+('people9', 'TL2', 'avatar1.jpg','2000-06-29',1,'sv','class3',1),
+('people10', 'TL3', 'avatar1.jpg','2000-06-29',1,'sv','class4',1),
+('people11', 'TL4', 'avatar1.jpg','2000-06-29',0,'sv','class4',1),
+('people12', 'TL2', 'avatar1.jpg','2000-06-29',1,'sv','class5',1),
+('people13', 'TL3', 'avatar1.jpg','2000-06-29',0,'sv','class5',0),
+('people14', 'TL4', 'avatar1.jpg','2000-06-29',1,'sv','class6',0),
+('people15', 'TL2', 'avatar1.jpg','2000-06-29',0,'nv',null,0),
+('people16', 'TL3', 'avatar1.jpg','2000-06-29',0,'gv',null,0);
 GO
 
 INSERT INTO Account
 VALUES('account1','anh.ntq31@aptechlearning.edu.vn','$2b$10$c.p0fHnLthBS8wFAsxrZWOVKobGKfHk01.9A8jm0w4wcomG.T3d9C','avatar1.jpg','people1', 'class1', '2021-12-20','admin',1,1),
-('account2','anh@gmail.com','$2b$10$c.p0fHnLthBS8wFAsxrZWOVKobGKfHk01.9A8jm0w4wcomG.T3d9C','avatar1.jpg','people2', 'class1', '2021-12-20','sv',1, 0),
+('account2','anh@gmail.com','$2b$10$c.p0fHnLthBS8wFAsxrZWOVKobGKfHk01.9A8jm0w4wcomG.T3d9C','avatar1.jpg','people2', 'class1', '2021-12-20','sv',1, 1),
 ('account3','nhathuy16122001@gmail.com','$2b$10$c.p0fHnLthBS8wFAsxrZWOVKobGKfHk01.9A8jm0w4wcomG.T3d9C','avatar1.jpg','people3', 'class1', '2021-12-20','gv',1, 1),
-('account4','abc@gmail.com','$10$B6r6V.lsqB0Y334pI3cIsu16M7.DYsgPyVxihvdOXcnuQovkGJCcS','avatar1.jpg','people4', 'class1', '2021-12-20','sv',0, 1);
+('account4','abc@gmail.com','$10$B6r6V.lsqB0Y334pI3cIsu16M7.DYsgPyVxihvdOXcnuQovkGJCcS','avatar1.jpg','people4', 'class1', '2021-12-20','sv',1, 1),
+('account5','abc5@gmail.com','$10$B6r6V.lsqB0Y334pI3cIsu16M7.DYsgPyVxihvdOXcnuQovkGJCcS','avatar1.jpg','people2',null, '2021-12-20','gv',1, 0),
+('account6','abc6@gmail.com','$10$B6r6V.lsqB0Y334pI3cIsu16M7.DYsgPyVxihvdOXcnuQovkGJCcS','avatar1.jpg','people4', 'class1', '2021-12-20','sv',1, 0);
 GO
 
-INSERT INTO Topic
-VALUES('Topic1',1),
-('Topic3',1),
-('Topic2',1),
-('Topic4',1);
-GO
 
 INSERT INTO Seminar
-VALUES (1,'seminar1.jpg','seminar 1','people1', '08:00:00', '09:00:00','2021-06-06','HCM',100,50,'seminar 1',1),
-(1,'seminar1.jpg','seminar 1','people2', '08:00:00', '09:00:00','2021-07-06','HCM',100,50,'seminar 1',1),
-(1,'seminar1.jpg','seminar 1','people1', '08:00:00', '09:00:00','2021-05-06','HCM',100,50,'seminar 1',1),
-(1,'seminar1.jpg','seminar 1','people3', '08:00:00', '09:00:00','2021-06-06','HCM',100,50,'seminar 1',0),
-(1,'seminar1.jpg','seminar 1','people1', '08:00:00', '09:00:00','2021-06-11','HCM',100,50,'seminar 1',1);
+VALUES ('seminar1.jpg','seminar 1','people1', '08:00:00', '09:00:00','2021-06-06','HCM',100,50,1,'seminar 1',1),
+('seminar1.jpg','seminar 1','people2', '08:00:00', '09:00:00','2021-07-06','HCM',100,50,1,'seminar 1',1),
+('seminar1.jpg','seminar 1','people1', '08:00:00', '09:00:00','2021-05-06','HCM',100,50,1,'seminar 1',1),
+('seminar1.jpg','seminar 1','people3', '08:00:00', '09:00:00','2021-06-06','HCM',100,50,1,'seminar 1',1),
+('seminar1.jpg','seminar 1','people1', '08:00:00', '09:00:00','2021-06-11','HCM',100,50,1,'seminar 1',1),
+('seminar1.jpg','seminar 1','people1', '08:00:00', '09:00:00','2021-06-11','HCM',100,50,0,'seminar 1',1),
+('seminar1.jpg','seminar 1','people1', '08:00:00', '09:00:00','2021-06-11','HCM',100,50,0,'seminar 1',1);
 GO
 
 INSERT INTO Question
@@ -222,11 +216,11 @@ VALUES('How to register for the survey?','You can click on the survey link that 
 GO
 
 INSERT INTO Survey
-VALUES ('Survey1',null,'2021-06-19',1),
-('Survey2','Survey2','2021-06-19',1),
-('Survey3','Survey3','2021-06-19',1),
-('Survey4',null,'2021-06-19',1),
-('Survey5',null,'2021-06-19',0);
+VALUES ('Survey1',null,'2021-06-19',1,1),
+('Survey2','Survey2','2021-06-19',0,1),
+('Survey3','Survey3','2021-06-19',1,1),
+('Survey4',null,'2021-06-19',0,1),
+('Survey5',null,'2021-06-19',0,0);
 GO
 
 INSERT INTO Score

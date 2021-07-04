@@ -19,6 +19,10 @@ namespace Server.Services
         Seminar UpdatePre(int idSeminar, string idPrecenter);
         Seminar DelPerforment(int idSeminar, int idPerforment);
         Seminar AddPerforment(PerformenSeminar performenSeminar);
-     
+        int CountAccept();
+        List<Seminar> ListAccept();
+        string DelAccept(int idSeminar);
+        string Accept(int idSeminar);
+
     }
 }

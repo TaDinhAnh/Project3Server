@@ -56,7 +56,7 @@ namespace Server.Controllers
                 return BadRequest();
             }
         }
-        [Produces("text/plain")]
+        [Produces("application/json")]
         [Consumes("application/json")]
         [HttpPut("Update")]
         public IActionResult Update([FromBody] Answer answer)

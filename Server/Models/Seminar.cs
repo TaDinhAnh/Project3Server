@@ -15,7 +15,6 @@ namespace Server.Models
         }
 
         public int Id { get; set; }
-        public int? IdTopic { get; set; }
         public string Img { get; set; }
         public string Name { get; set; }
         public string Presenters { get; set; }
@@ -25,10 +24,10 @@ namespace Server.Models
         public string Place { get; set; }
         public int? Maximum { get; set; }
         public int? NumberOfParticipants { get; set; }
+        public bool? Active { get; set; }
         public string Descriptoin { get; set; }
         public bool? Status { get; set; }
 
-        public virtual Topic IdTopicNavigation { get; set; }
         public virtual AllPerson PresentersNavigation { get; set; }
         public virtual ICollection<Img> Imgs { get; set; }
         public virtual ICollection<PerformenSeminar> PerformenSeminars { get; set; }

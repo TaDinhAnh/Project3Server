@@ -13,6 +13,19 @@ namespace Server.Services
         {
             db = databaseContext;
         }
+
+        public int CountActive()
+        {
+            try
+            {
+                return db.Accounts.Where(e => e.Active == false).Count();
+            }
+            catch (Exception e)
+            {
+                return 0;
+            }
+        }
+
         public string Create(Account acc)
         {
             try
@@ -34,9 +47,9 @@ namespace Server.Services
                 var acc = db.Accounts.Find(idAcc);
                 acc.Status = false;
                 db.SaveChanges();
-                return db.Accounts.ToList();
+                return db.Accounts.Select(e => new Account { Id = e.Id, IdPeople = e.IdPeople, UserName = e.UserName, Img = e.Img, Role = e.Role, Date = e.Date, Status = e.Status }).ToList();
             }
-            catch (Exception e)
+            catch
             {
                 return null;
             }
@@ -54,11 +67,23 @@ namespace Server.Services
             }
         }
 
+        public List<Account> FindAccAcitve()
+        {
+            try
+            {
+                return db.Accounts.Where(e => e.Active == false).Select(e => new Account { Id = e.Id, IdPeople = e.IdPeople, UserName = e.UserName, Img = e.Img, Role = e.Role, Date = e.Date, Status = e.Status }).ToList();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         public List<Account> FindAll()
         {
             try
             {
-                return db.Accounts.ToList();
+                return db.Accounts.Where(e => e.Active == true).ToList();
             }
             catch
             {
@@ -92,6 +117,49 @@ namespace Server.Services
                 return e.Message;
             }
 
+        }
+        public string Accept(int idAccount)
+        {
+            try
+            {
+                var acc = db.Accounts.Find(idAccount);
+                acc.Active = true;
+                db.SaveChanges();
+                return "success";
+            }
+            catch (Exception e)
+            {
+                return e.Message;
+            }
+
+        }
+        public string DelAccept(int idAccount)
+        {
+            try
+            {
+                var acc = db.Accounts.Find(idAccount);
+                db.Accounts.Remove(acc);
+                db.SaveChanges();
+                return "success";
+            }
+            catch (Exception e)
+            {
+                return e.Message;
+            }
+
+        }
+
+        public int CountAcc(string idPeople)
+        {
+            try
+            {
+
+                return db.Accounts.Where(e => e.IdPeople == idPeople && e.Active == true).Count();
+            }
+            catch (Exception e)
+            {
+                return 0;
+            }
         }
     }
 }

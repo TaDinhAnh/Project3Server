@@ -26,7 +26,6 @@ namespace Server.Models
         public bool? Status { get; set; }
         public bool? Active { get; set; }
 
-        public virtual AllPerson IdPeopleNavigation { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<RegisterSeminar> RegisterSeminars { get; set; }
         public virtual ICollection<Score> Scores { get; set; }

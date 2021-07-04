@@ -30,7 +30,7 @@ namespace Server.Services
         {
             try
             {
-                db.Performers.Remove(db.Performers.Find(idPerformer));
+                db.Performers.Find(idPerformer).Status = false;
                 db.SaveChanges();
                 return "Seccuss";
             }
@@ -56,6 +56,17 @@ namespace Server.Services
         {
             try
             {
+                return db.Performers.Where(e => e.Status == true).ToList();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+        public List<Performer> FindAll2()
+        {
+            try
+            {
                 return db.Performers.ToList();
             }
             catch
@@ -63,13 +74,16 @@ namespace Server.Services
                 return null;
             }
         }
-
         public string Update(Performer performer)
         {
             try
             {
-
-                db.Entry(performer).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                var per = db.Performers.Find(performer.Id);
+                per.Name = performer.Name;
+                per.Status = performer.Status;
+                per.Dob = performer.Dob;
+                per.Gender = performer.Gender;
+                if (performer.Img != null) per.Img = performer.Img;
                 db.SaveChanges();
                 return "success";
             }

@@ -81,7 +81,6 @@ namespace Server.Controllers
                 var seminar = new Seminar
                 {
                     Id = 0,
-                    IdTopic = seminarDTO.IdTopic,
                     Img = seminarDTO.Img,
                     Name = seminarDTO.Name,
                     Presenters = seminarDTO.Presenters,
@@ -91,6 +90,7 @@ namespace Server.Controllers
                     Place = seminarDTO.Place,
                     Maximum = seminarDTO.Maximum,
                     Descriptoin = seminarDTO.Descriptoin,
+                    Active = true,
                     Status = true
                 };
                 return Ok(seminarService.Create(seminar));
@@ -167,6 +167,57 @@ namespace Server.Controllers
                 return BadRequest();
             }
         }
-     
+        [Produces("text/plain")]
+        [HttpGet("countAccept")]
+        public IActionResult CountAccpet()
+        {
+            try
+            {
+                return Ok(seminarService.CountAccept() + " ");
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+        [Produces("application/json")]
+        [HttpGet("listAccept")]
+        public IActionResult ListAccpet()
+        {
+            try
+            {
+                return Ok(seminarService.ListAccept());
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+        [Produces("text/plain")]
+        [HttpGet("accept/{idSeminar}")]
+        public IActionResult Accpet(int idSeminar)
+        {
+            try
+            {
+                return Ok(seminarService.Accept(idSeminar));
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+        [Produces("text/plain")]
+        [HttpDelete("delAccept/{idSeminar}")]
+        public IActionResult DelAccpet(int idSeminar)
+        {
+            try
+            {
+                return Ok(seminarService.DelAccept(idSeminar));
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
     }
 }

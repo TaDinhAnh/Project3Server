@@ -11,6 +11,6 @@ namespace Server.Services
         Answer Find(int idAnswer);
         List<Answer> Create(Answer answer);
         List<Answer> Del(int idAnswer, int idQues);
-        string Update(Answer answer);
+        List<Answer> Update(Answer answer);
     }
 }

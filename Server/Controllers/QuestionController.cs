@@ -42,7 +42,7 @@ namespace Server.Controllers
                 return BadRequest();
             }
         }
-        [Produces("text/plain")]
+        [Produces("application/json")]
         [Consumes("application/json")]
         [HttpPost("Create")]
         public IActionResult Create([FromBody] Question question)
@@ -56,7 +56,7 @@ namespace Server.Controllers
                 return BadRequest();
             }
         }
-        [Produces("text/plain")]
+        [Produces("application/json")]
         [Consumes("application/json")]
         [HttpPut("Update")]
         public IActionResult Update([FromBody] Question question)

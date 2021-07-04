@@ -8,6 +8,7 @@ namespace Server.Services
     public interface IPerformerService
     {
         List<Performer> FindAll();
+        List<Performer> FindAll2();
         Performer Find(int idPerformer);
         string Create(Performer performer);
         string Del(int idPerformer);

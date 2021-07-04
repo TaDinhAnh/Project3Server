@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 using Server.Models;
 namespace Server.Services
 {
-   public interface IQuestionService
+    public interface IQuestionService
     {
         List<Question> FindAll();
         Question Find(int idQuestion);
-        string Create(Question question);
+        List<Question> Create(Question question);
         List<Question> Del(int iduestion);
-        string Update(Question question);
+        Question Update(Question question);
     }
 }

@@ -31,7 +31,7 @@ namespace Server.Services
         {
             try
             {
-                db.Seminars.Remove(db.Seminars.Find(idSeminar));
+                db.Seminars.Find(idSeminar).Status = false;
                 db.SaveChanges();
                 return (from s in db.Seminars
                         join p in db.AllPeople on s.Presenters equals p.IdPerson
@@ -88,6 +88,7 @@ namespace Server.Services
             {
                 return (from s in db.Seminars
                         join p in db.AllPeople on s.Presenters equals p.IdPerson
+                        where s.Active == true
                         select
                         new SeminarDTO { Id = s.Id, Name = s.Name, Img = s.Img, NamePresenters = p.Name, Day = s.Day, Status = s.Status }).ToList();
             }
@@ -104,7 +105,7 @@ namespace Server.Services
                 return (SeminarDTO)from s in db.Seminars
                                    join p in db.AllPeople on s.Presenters equals p.IdPerson
                                    where s.Id == idSeminar
-                                   select new SeminarDTO { Id = s.Id, IdTopic = s.IdTopic, Name = s.Name, Img = s.Img, Presenters = s.Presenters, NamePresenters = p.Name, TimeStart = s.TimeStart.ToString(), TimeEnd = s.TimeEnd.ToString(), Day = s.Day, Place = s.Place, Maximum = s.Maximum, Descriptoin = s.Descriptoin, Status = s.Status };
+                                   select new SeminarDTO { Id = s.Id, Name = s.Name, Img = s.Img, Presenters = s.Presenters, NamePresenters = p.Name, TimeStart = s.TimeStart.ToString(), TimeEnd = s.TimeEnd.ToString(), Day = s.Day, Place = s.Place, Maximum = s.Maximum, Descriptoin = s.Descriptoin, Status = s.Status };
 
             }
             catch
@@ -119,7 +120,7 @@ namespace Server.Services
             {
                 return (from s in db.Seminars
                         join p in db.AllPeople on s.Presenters equals p.IdPerson
-                        where s.Day < DateTime.Now
+                        where s.Day < DateTime.Now && s.Status == true
                         orderby s.Day descending
                         select
                         new SeminarDTO { Name = s.Name, Img = s.Img, NamePresenters = p.Name, Day = s.Day, Status = s.Status }).Take(n).ToList();
@@ -136,7 +137,6 @@ namespace Server.Services
             try
             {
                 var seminar = db.Seminars.Find(seminarDTO.Id);
-                seminar.IdTopic = seminarDTO.IdTopic;
                 if (seminarDTO.Img != null) seminar.Img = seminarDTO.Img;
                 seminar.Name = seminarDTO.Name;
                 seminar.TimeStart = TimeSpan.Parse(seminarDTO.TimeStart);
@@ -188,6 +188,53 @@ namespace Server.Services
             }
         }
 
-  
+        public int CountAccept()
+        {
+            try
+            {
+                return db.Seminars.Where(e => e.Active == false).Count();
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+        public List<Seminar> ListAccept()
+        {
+            try
+            {
+                return db.Seminars.Where(e => e.Active == false).ToList();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+        public string Accept(int idSeminar)
+        {
+            try
+            {
+                db.Seminars.Find(idSeminar).Active = true;
+                db.SaveChanges();
+                return "Seccuss";
+            }
+            catch (Exception e)
+            {
+                return e.Message;
+            }
+        }
+        public string DelAccept(int idSeminar)
+        {
+            try
+            {
+                db.Seminars.Remove(db.Seminars.Find(idSeminar));
+                db.SaveChanges();
+                return "Seccuss";
+            }
+            catch (Exception e)
+            {
+                return e.Message;
+            }
+        }
     }
 }

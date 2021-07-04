@@ -32,7 +32,6 @@ namespace Server
             services.AddDbContext<DatabaseContext>(option => option.UseLazyLoadingProxies().UseSqlServer(conn));
             services.AddScoped<IAccountService, AccountServiceImpl>();
             services.AddScoped<IAllPersonService, AllPersonServiceImpl>();
-            services.AddScoped<ITopicService, TopicServiceImpl>();
             services.AddScoped<ISurveyService, SurveyServiceImpl>();
             services.AddScoped<IAnswerService, AnswerServiceImpl>();
             services.AddScoped<IImgService, ImgServiceImpl>();

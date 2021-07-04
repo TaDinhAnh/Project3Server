@@ -31,9 +31,6 @@ namespace Server.Models
         public virtual DbSet<Score> Scores { get; set; }
         public virtual DbSet<Seminar> Seminars { get; set; }
         public virtual DbSet<Survey> Surveys { get; set; }
-        public virtual DbSet<Topic> Topics { get; set; }
-
-     
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -43,10 +40,8 @@ namespace Server.Models
             {
                 entity.ToTable("Account");
 
-                entity.HasIndex(e => e.Email, "UQ__Account__A9D10534A289831E")
+                entity.HasIndex(e => e.Email, "UQ__Account__A9D10534D0393F37")
                     .IsUnique();
-
-                entity.Property(e => e.Active).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.Class).HasMaxLength(50);
 
@@ -62,20 +57,13 @@ namespace Server.Models
 
                 entity.Property(e => e.Role).HasMaxLength(50);
 
-                entity.Property(e => e.Status).HasDefaultValueSql("((0))");
-
                 entity.Property(e => e.UserName).HasMaxLength(50);
-
-                entity.HasOne(d => d.IdPeopleNavigation)
-                    .WithMany(p => p.Accounts)
-                    .HasForeignKey(d => d.IdPeople)
-                    .HasConstraintName("FK_Account_AllPeople");
             });
 
             modelBuilder.Entity<AllPerson>(entity =>
             {
                 entity.HasKey(e => e.IdPerson)
-                    .HasName("PK__AllPeopl__A5D4E15BD6453787");
+                    .HasName("PK__AllPeopl__A5D4E15B88F3380F");
 
                 entity.Property(e => e.IdPerson).HasMaxLength(250);
 
@@ -146,7 +134,7 @@ namespace Server.Models
             modelBuilder.Entity<PerformenSeminar>(entity =>
             {
                 entity.HasKey(e => new { e.IdPerforment, e.IdSeminar })
-                    .HasName("PK__Performe__80EC2C6136A9AA9A");
+                    .HasName("PK__Performe__80EC2C61F0C125C3");
 
                 entity.ToTable("PerformenSeminar");
 
@@ -190,7 +178,7 @@ namespace Server.Models
             modelBuilder.Entity<QuestionSurvey>(entity =>
             {
                 entity.HasKey(e => new { e.IdQuestion, e.IdSurvey })
-                    .HasName("PK__Question__E1194D418BEA1215");
+                    .HasName("PK__Question__E1194D41745DA2B2");
 
                 entity.ToTable("QuestionSurvey");
 
@@ -212,7 +200,7 @@ namespace Server.Models
             modelBuilder.Entity<RegisterSeminar>(entity =>
             {
                 entity.HasKey(e => new { e.IdAcc, e.IdSeminar })
-                    .HasName("PK__Register__2CCF44CA203CEC3A");
+                    .HasName("PK__Register__2CCF44CAEA1268EF");
 
                 entity.ToTable("RegisterSeminar");
 
@@ -232,7 +220,7 @@ namespace Server.Models
             modelBuilder.Entity<Score>(entity =>
             {
                 entity.HasKey(e => new { e.IdAcc, e.IdSurvey })
-                    .HasName("PK__Score__1409340B8475EB6F");
+                    .HasName("PK__Score__1409340BC3459C7E");
 
                 entity.ToTable("Score");
 
@@ -267,11 +255,6 @@ namespace Server.Models
 
                 entity.Property(e => e.Presenters).HasMaxLength(250);
 
-                entity.HasOne(d => d.IdTopicNavigation)
-                    .WithMany(p => p.Seminars)
-                    .HasForeignKey(d => d.IdTopic)
-                    .HasConstraintName("FK_Seminar_Topic");
-
                 entity.HasOne(d => d.PresentersNavigation)
                     .WithMany(p => p.Seminars)
                     .HasForeignKey(d => d.Presenters)
@@ -289,15 +272,6 @@ namespace Server.Models
                     .HasColumnName("NAME");
 
                 entity.Property(e => e.Updated).HasColumnType("date");
-            });
-
-            modelBuilder.Entity<Topic>(entity =>
-            {
-                entity.ToTable("Topic");
-
-                entity.Property(e => e.Topic1)
-                    .HasMaxLength(50)
-                    .HasColumnName("Topic");
             });
 
             OnModelCreatingPartial(modelBuilder);

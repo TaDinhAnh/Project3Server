@@ -10,7 +10,7 @@ namespace Server.Services
         List<AllPerson> FindAll();
         AllPerson Find(string idAllPerson);
         string Create(AllPerson allPerson);
-        string Del(int idAllPerson);
+        string Del(string idAllPerson);
         string Update(AllPerson allPerson);
         List<AllPerson> FindStaff();
     }
