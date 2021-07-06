@@ -73,7 +73,7 @@ namespace Server.Services
                 db.SaveChanges();
                 return db.Faqs.ToList(); ;
             }
-            catch (Exception e)
+            catch
             {
                 return null;
             }

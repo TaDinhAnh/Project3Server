@@ -74,7 +74,7 @@ namespace Server.Services
         {
             try
             {
-                return db.AllPeople.Where(e => e.Position == "gv" || e.Position == "nv" && e.Status == true).ToList();
+                return db.AllPeople.Where(e => e.Position == "nv" && e.Status == true).ToList();
             }
             catch
             {

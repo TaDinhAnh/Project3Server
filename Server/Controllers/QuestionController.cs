@@ -30,6 +30,32 @@ namespace Server.Controllers
             }
         }
         [Produces("application/json")]
+        [HttpGet("findAll2")]
+        public IActionResult FindAll2()
+        {
+            try
+            {
+                return Ok(questionService.FindAll2());
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+        [Produces("application/json")]
+        [HttpGet("findQuestion/{idSurvey}")]
+        public IActionResult findQuestion(int idSurvey)
+        {
+            try
+            {
+                return Ok(questionService.findQuestion(idSurvey));
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+        [Produces("application/json")]
         [HttpGet("find/{idQuestion}")]
         public IActionResult Find(int idQuestion)
         {
@@ -77,6 +103,45 @@ namespace Server.Controllers
             try
             {
                 return Ok(questionService.Del(idQuestionic));
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+        [Produces("application/json")]
+        [HttpGet("checkcorrect/{idques}/{idans}")]
+        public IActionResult CheckCorrect(int idques, int idans)
+        {
+            try
+            {
+                return Ok(questionService.CheckCorrect(idques, idans));
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+        [Produces("text/plain")]
+        [HttpGet("count/{n}/{id}")]
+        public IActionResult CountQuestion(bool n, int id)
+        {
+            try
+            {
+                return Ok(questionService.CountQuestion(n, id));
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+        [Produces("application/json")]
+        [HttpGet("findbyactive/{n}/{id}")]
+        public IActionResult FindByActive(bool n, int id)
+        {
+            try
+            {
+                return Ok(questionService.FindByActive(n, id));
             }
             catch
             {

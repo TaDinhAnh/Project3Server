@@ -46,6 +46,19 @@ namespace Server.Controllers
             }
         }
         [Produces("application/json")]
+        [HttpGet("findAll3/{idPerson}")]
+        public IActionResult FindAll3(string idPerson)
+        {
+            try
+            {
+                return Ok(seminarService.FindAll3(idPerson));
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+        [Produces("application/json")]
         [HttpGet("findRecent/{n}")]
         public IActionResult findRecent(int n)
         {
@@ -90,7 +103,7 @@ namespace Server.Controllers
                     Place = seminarDTO.Place,
                     Maximum = seminarDTO.Maximum,
                     Descriptoin = seminarDTO.Descriptoin,
-                    Active = true,
+                    Active = seminarDTO.Active,
                     Status = true
                 };
                 return Ok(seminarService.Create(seminar));
@@ -218,6 +231,62 @@ namespace Server.Controllers
             {
                 return BadRequest();
             }
+        }
+
+
+        [Produces("application/json")]
+        [Consumes("application/json")]
+        [HttpGet("updatenum/{id}")]
+        public IActionResult UpdateNum(int id)
+        {
+            try
+            {
+                return Ok(seminarService.UpdateNumber(id));
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+        [Produces("application/json")]
+        [HttpGet("checkmaximum")]
+        public IActionResult CheckMaximum()
+        {
+            try
+            {
+                return Ok(seminarService.CheckMaximum());
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+        [Produces("application/json")]
+        [HttpGet("register/{id}")]
+        public IActionResult RegisteredSeminar(int id)
+        {
+            try
+            {
+                return Ok(seminarService.RegisteredSeminar(id));
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+        [Produces("text/plain")]
+        [HttpGet("checkdateseminar")]
+        public IActionResult CheckDateSeminar()
+        {
+            try
+            {
+                return Ok(seminarService.CheckDateSeminar());
+            }
+            catch
+            {
+                return BadRequest();
+            }
+
         }
     }
 }

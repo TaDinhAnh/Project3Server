@@ -43,50 +43,6 @@ namespace Server.Controllers
                 return BadRequest();
             }
         }
-        [Produces("text/plain")]
-        [Consumes("application/json")]
-        [HttpPost("Create")]
-        public IActionResult Create([FromBody] Account account)
-        {
-            try
-            {
-                return Ok(accountService.Create(account));
-            }
-            catch
-            {
-                return BadRequest();
-            }
-        }
-        [Produces("application/json")]
-        [Consumes("application/json")]
-        [HttpPost("Login")]
-        public IActionResult Login([FromBody] Account account)
-        {
-            try
-            {
-
-
-                return Ok(accountService.Login(account));
-            }
-            catch
-            {
-                return BadRequest();
-            }
-        }
-        [Produces("text/plain")]
-        [Consumes("application/json")]
-        [HttpPut("Update")]
-        public IActionResult Update([FromBody] Account account)
-        {
-            try
-            {
-                return Ok(accountService.Update(account));
-            }
-            catch
-            {
-                return BadRequest();
-            }
-        }
         [Produces("application/json")]
         [Consumes("application/json")]
         [HttpDelete("Del/{idAcc}")]
@@ -159,7 +115,103 @@ namespace Server.Controllers
         {
             try
             {
-                return Ok(accountService.CountAcc(idPeople)+" ");
+                return Ok(accountService.CountAcc(idPeople) + " ");
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+        [Produces("application/json")]
+        [HttpGet("findmail/{mail}")]
+        public IActionResult FindMail(string mail)
+        {
+            try
+            {
+                return Ok(accountService.FindMail(mail));
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+        [Produces("application/json")]
+        [HttpGet("findtop")]
+        public IActionResult FindTop()
+        {
+            try
+            {
+                return Ok(accountService.FindTop(6));
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+        [Produces("text/plain")]
+        [HttpGet("checkmail/{mail}")]
+        public IActionResult CheckMail(string mail)
+        {
+            try
+            {
+                return Ok(accountService.CheckMail(mail));
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+        [Produces("text/plain")]
+        [Consumes("application/json")]
+        [HttpPost("Create")]
+        public IActionResult Create([FromBody] Account account)
+        {
+            try
+            {
+                return Ok(accountService.Create(account));
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+        [Produces("application/json")]
+        [Consumes("application/json")]
+        [HttpPost("Login")]
+        public IActionResult Login([FromBody] Account account)
+        {
+            try
+            {
+
+                return Ok(accountService.Login(account));
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+        [Produces("text/plain")]
+        [Consumes("application/json")]
+        [HttpPut("Update")]
+        public IActionResult Update([FromBody] Account account)
+        {
+            try
+            {
+                return Ok(accountService.Update(account));
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+        [Produces("text/plain")]
+        [Consumes("application/json")]
+        [HttpPut("UpdatePass")]
+        public IActionResult UpdatePass([FromBody] Account account)
+        {
+            try
+            {
+                return Ok(accountService.UpdatePass(account));
             }
             catch
             {

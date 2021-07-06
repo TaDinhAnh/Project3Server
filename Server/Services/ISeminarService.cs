@@ -10,6 +10,7 @@ namespace Server.Services
     {
         List<Seminar> FindAll();
         List<SeminarDTO> FindAll2();
+        List<SeminarDTO> FindAll3(string idPerson);
         List<SeminarDTO> RecentSeminar(int n);
         Seminar Find(int idSeminar);
         SeminarDTO FindDTO(int idSeminar);
@@ -23,6 +24,10 @@ namespace Server.Services
         List<Seminar> ListAccept();
         string DelAccept(int idSeminar);
         string Accept(int idSeminar);
+        string CheckDateSeminar();
+        string CheckMaximum();
+        List<Seminar> RegisteredSeminar(int id);
+        Seminar UpdateNumber(int id);
 
     }
 }

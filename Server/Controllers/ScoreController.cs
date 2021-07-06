@@ -27,5 +27,32 @@ namespace Server.Controllers
                 return BadRequest();
             }
         }
+        [Produces("text/plain")]
+        [Consumes("application/json")]
+        [HttpPost("Create")]
+        public IActionResult Create([FromBody] Score score)
+        {
+            try
+            {
+                return Ok(scoreService.Create(score));
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+        [Route("checkexists/{idAcc}/{idSurvey}")]
+        [HttpGet]
+        public IActionResult CheckExists(int idAcc, int idSurvey)
+        {
+            try
+            {
+                return Ok(scoreService.CheckExists(idAcc, idSurvey));
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
     }
 }

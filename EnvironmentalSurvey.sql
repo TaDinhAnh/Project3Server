@@ -1,4 +1,6 @@
-﻿USE master
+﻿
+  
+USE master
 GO
 
 DROP DATABASE IF EXISTS EnvironmentalSurvey

@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Server.DTO;
+using System.Diagnostics;
 
 namespace Server.Services
 {
@@ -20,7 +22,7 @@ namespace Server.Services
             {
                 return db.Accounts.Where(e => e.Active == false).Count();
             }
-            catch (Exception e)
+            catch 
             {
                 return 0;
             }
@@ -95,10 +97,19 @@ namespace Server.Services
         {
             try
             {
-                return db.Accounts.FirstOrDefault(e => e.UserName == account.UserName && e.Password == account.Password && e.Status == true);
+                var acc = db.Accounts.SingleOrDefault(u => u.UserName == account.UserName && u.Active == true && u.Status == true);
+                if (acc != null)
+                {
+                    if (BCrypt.Net.BCrypt.Verify(account.Password, acc.Password))
+                    {
+                        return acc;
+                    }
+                }
+                return null;
             }
             catch
             {
+              
                 return null;
             }
         }
@@ -156,9 +167,70 @@ namespace Server.Services
 
                 return db.Accounts.Where(e => e.IdPeople == idPeople && e.Active == true).Count();
             }
-            catch (Exception e)
+            catch
             {
                 return 0;
+            }
+        }
+        public Account FindMail(string mail)
+        {
+            try
+            {
+                return db.Accounts.FirstOrDefault(a => a.Email == mail);
+            }
+            catch
+            {
+
+                return null;
+            }
+        }
+
+        public List<AccountDTO> FindTop(int number)
+        {
+            try
+            {
+                return (from a in db.Accounts
+                        join s in db.Scores on a.Id equals s.IdAcc
+                        select new AccountDTO
+                        {
+                            Id = a.Id,
+                            UserName = a.UserName,
+                            Img = a.Img,
+                            Class = a.Class,
+                            Score = s.Score1
+                        }).Take(number).OrderByDescending(e => e.Score).ToList();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public string UpdatePass(Account acc)
+        {
+            try
+            {
+                var acc2 = db.Accounts.FirstOrDefault(s => s.Email == acc.Email);
+                acc2.Password = acc.Password;
+                db.SaveChanges();
+                return "success";
+            }
+            catch (Exception e)
+            {
+                return e.Message;
+            }
+
+        }
+
+        public string CheckMail(string mail)
+        {
+            try
+            {
+                return db.Accounts.Count(a => a.Email == mail).ToString();
+            }
+            catch (Exception e)
+            {
+                return e.Message;
             }
         }
     }
